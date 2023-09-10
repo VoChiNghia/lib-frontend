@@ -1,0 +1,21 @@
+@import '../../style/variable';
+.select{
+    border:1px solid $lightGray;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: $box-shadow;
+    width: 100%;
+    margin: 0 5px;
+    &__list{
+        &-item{
+            background-color: $lightGray;
+            padding: 0 10px;
+            margin-right: 5px;
+            border-radius: 5px;
+        }
+    }
+    &-icon{
+        color: $mainColor;
+    }
+}

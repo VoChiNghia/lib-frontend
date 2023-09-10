@@ -1,0 +1,46 @@
+@import '../../style/variable';
+
+.btn{
+    &.outline button{
+        background-color:transparent;
+        border: 1px solid $mainColor;
+        color: $mainColor;
+        outline-style: none !important;
+    }
+    button{
+        //background-color:$background;
+        background-color: $background;
+        color: #fff;
+        padding:10px 20px;
+        border-radius:5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: $box-shadow;
+        div{
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            .icon{
+                margin: 0 10px;
+            }
+        }
+        &:hover {
+            opacity: 0.8;
+            scale: 1.1;
+        }
+        &.disabled-button{
+            background-color:gray;
+            cursor:default;
+            scale: none;
+            opacity: 1;
+            pointer-events: none;
+        }
+        &.disabled-hover{
+            &:hover {
+                opacity: 0.8;
+                scale: 1;
+            }
+        }
+    }
+  
+}

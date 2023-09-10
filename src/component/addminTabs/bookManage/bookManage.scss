@@ -1,0 +1,97 @@
+@import "../../../style/variable";
+.book__manage {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  &__control {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    &-btn {
+      flex: 1;
+    }
+    &-field {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  h1 {
+    font-size: 20px;
+    margin: 10px;
+  }
+  &__wrapper {
+    margin: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: $box-shadow;
+    &__list__book {
+      border-spacing: 0;
+      border-collapse: collapse;
+      border-style: solid;
+      border-color: red;
+      color: white;
+      width: 100%;
+
+      &-header {
+        background-color: $background;
+        tr {
+          th {
+            padding: 15px;
+            border-right: 1px solid #e7e7e7;
+          }
+        }
+      }
+      &-body {
+        color: gray;
+        &__row {
+          &:nth-child(odd) {
+            background: #FFF2E7;
+          }
+          transition: all 0.1s ease-in-out ;
+          &:hover{
+           opacity: 0.7;
+            cursor: pointer;
+          }
+          &-item {
+            padding: 2px 10px;
+            border-right: 1px solid #e7e7e7;
+            border-bottom: 1px solid #e7e7e7;
+            font-size: 13px;
+            img {
+              width: 30px;
+            }
+          }
+
+          .btn-edit,
+          .btn-delete {
+            padding: 6px;
+            margin: 0 2px;
+            border-radius: 5px;
+            transition: all 0.1s ease-in;
+            &:hover {
+              transform: scale(1.1);
+              cursor: pointer;
+            }
+          }
+          .btn-edit {
+            background-color: rgba(0, 128, 0, 0.068);
+
+            border-radius: 5px;
+            span {
+              color: green;
+            }
+          }
+          .btn-delete {
+            background-color: rgba(255, 0, 0, 0.068);
+
+            border-radius: 5px;
+            span {
+              color: red;
+            }
+          }
+        }
+      }
+    }
+  }
+}

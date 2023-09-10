@@ -1,0 +1,41 @@
+@import '../../style/variable';
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    &__left {
+        flex: 1;
+        width: 100%;
+        &__logo{
+            display: flex;
+            img{
+                width: 50px;
+            }
+            &-info{
+                text-align: center;
+                h2{
+                    color: $mainColor;
+                }
+            }
+        }
+    }
+
+    &__center{
+        flex: 1;
+    }
+
+    &__right{
+        flex: 1;
+        &-btn{
+            display: flex;
+            justify-content: flex-end;
+           div{
+            margin: 0 5px;
+           }
+        }
+    }
+
+
+    
+}
