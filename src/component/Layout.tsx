@@ -37,8 +37,8 @@ const Layout = () => {
     <HistoryRouter history={history}>
       <Routes>
         {/* login as user account */}
-        <Route path="/login-form" element={!userRole?.role ? <LoginForm /> ? userRole?.role === 'user' : <Navigate to="/" replace={true} /> : <Navigate to="/admin" replace={true} />}></Route>
-        <Route path="/login" element={!userRole?.role ? <LoginForm /> ? userRole?.role === 'user' : <Navigate to="/" replace={true} /> : <Navigate to="/admin" replace={true} />}></Route>
+        <Route path="/login-form" element={!userRole?.role ? <LoginForm /> : <Navigate to="/" replace={true} />}></Route>
+        <Route path="/login" element={!userRole?.role ? <LoginForm /> : <Navigate to="/" replace={true} />}></Route>
 
         <Route index path="/:id" element={userRole?.role === "user" ? <DetailBook /> : <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/list-book-borrow/:id" element={userRole?.role === "user" ? <ListBookBorrow /> : <Navigate to="/login-form" replace={true} />}></Route>
