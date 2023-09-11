@@ -46,7 +46,7 @@ const AddBook = (props: AddBookProps) => {
   const [formDataImage, setFormDataImage] = useState<FormData>();
   const dispatch: DispatchType = useDispatch();
   const year = new Date().getFullYear();
-  const years = Array.from(new Array(40), (val, index) => year - index);
+  const years = Array.from(new Array(100), (val, index) => year - index);
   const { category } = useSelector((state: RootState) => state.category);
 
   const handleFileChange = (event: any) => {
