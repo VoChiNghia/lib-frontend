@@ -46,6 +46,10 @@ const BookManage = () => {
     dispatch(changeComponent(<AddFile />))
     dispatch(setIsOpenCompoent(true))
   }
+  const handleSubmitAddBook = () => {
+    dispatch(changeComponent(<AddBook />))
+    dispatch(setIsOpenCompoent(true))
+  }
 
   const hanldeEdit = (item: any) => {
     dispatch(changeComponent(<AddBook value={item} />))
@@ -78,7 +82,7 @@ const BookManage = () => {
       <div className="book__manage__control">
         <div className="book__manage__control-btn flex">
           <div className="mx-1">
-            <ButtonSolid text="Thêm sách" onSubmit={handleSubmit} outline />
+            <ButtonSolid text="Thêm sách" onSubmit={handleSubmitAddBook} outline />
           </div>
           <div className="mx-1">
             <ButtonSolid text="Thêm Tài liệu" onSubmit={handleSubmit} outline />
