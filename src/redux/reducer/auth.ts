@@ -8,7 +8,8 @@ import { toast } from "react-toastify";
 const initialState: any = {
   login: '',
   loading: false,
-  role: ''
+  role: '',
+  user: null
 };
 const authSlice = createSlice({
   name: "auth",
@@ -30,16 +31,14 @@ const authSlice = createSlice({
        localStorage.setItem(TOKEN,JSON.stringify(token?.accessToken))
         localStorage.setItem(USER,JSON.stringify(user))
         localStorage.setItem(ID,JSON.stringify(user?._id))
-        
+        state.user = action.payload.user
         state.login = user
         state.loading = false;
 
         if(user?.role === 'user') {
           history.push('/')
-          window.location.reload()
         }else{
           history.push('/admin')
-          window.location.reload()
         }
         }
         state.loading = false;

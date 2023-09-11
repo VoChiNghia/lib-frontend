@@ -48,7 +48,6 @@ const Header = () => {
   const handleLogout = () => {
    localStorage.clear();
    history.push('/login-form')
-   window.location.reload()
   };
 
   return (
