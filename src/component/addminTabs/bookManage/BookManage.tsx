@@ -24,8 +24,8 @@ const BookManage = () => {
   const [type, setType] = useState<string>("")
   const [actionData, setActionData] = useState(null)
   const query = {
-    limit: LIMIT,
-    page: currentPage,
+    // limit: LIMIT,
+    // page: currentPage,
   }
 
   console.log(allFile)

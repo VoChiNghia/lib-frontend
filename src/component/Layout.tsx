@@ -14,6 +14,7 @@ import 'primeicons/primeicons.css';
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
+import RegisterForm from "../pages/registerForm/RegisterForm"
 
 export const history = createBrowserHistory({ v5Compat: true })
 const Layout = () => {
@@ -41,7 +42,7 @@ const Layout = () => {
     <HistoryRouter history={history}>
       <Routes>
         {/* login as user account */}
-        <Route path="/login-form" element={!userRole?.role ? <LoginForm /> : <Navigate to="/" replace={true} />}></Route>
+        <Route path="/register-form" element={!userRole?.role ? <RegisterForm /> : <Navigate to="/" replace={true} />}></Route>
         <Route path="/login-form" element={!userRole?.role ? <LoginForm /> : <Navigate to="/" replace={true} />}></Route>
         <Route path="/login" element={!userRole?.role ? <LoginForm /> : <Navigate to="/" replace={true} />}></Route>
 
