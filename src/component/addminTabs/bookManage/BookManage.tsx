@@ -7,7 +7,7 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai"
 import { changeComponent, setIsOpenCompoent } from "../../../redux/reducer/modal"
 import { useDispatch, useSelector } from "react-redux"
 import AddBook from "../../form/formAddBook/AddBook"
-import { deleteBook, getAllBook, getAllFile } from "../../../redux/reducer/book"
+import { deleteBook, deleteFile, getAllBook, getAllFile } from "../../../redux/reducer/book"
 import { DispatchType, RootState } from "../../../redux/store"
 import { getAllCategory } from "../../../redux/reducer/category"
 import UploadCoverImage from "../../form/formUpdateCoverBook"
@@ -126,9 +126,7 @@ const representativeBodyTemplate4 = (rowData: any) => {
       <div className="flex align-items-center gap-2">
                         <button
                           onClick={() => {
-                            setType("delete")
-                            setVisible(true)
-                            setActionData(rowData._id)
+                            dispatch(deleteFile(rowData._id))
                           }}
                           className="btn-delete"
                         >

@@ -16,7 +16,9 @@ const initialState: any = {
   getListBorrowBook: null,
   allBlog: null,
   blogDetail: null,
-  allFile: null
+  allFile: null,
+  allPenalty: null,
+  fileDetail: null
 };
 const bookSlice = createSlice({
   name: "book",
@@ -43,6 +45,12 @@ getAllFileReducer: (state, action) => {
 },
 getBlogDetailReducer: (state, action) => {
   state.blogDetail = action.payload
+},
+getAllPenaltyReducer: (state, action) => {
+  state.allPenalty = action.payload
+},
+getFileByIdReducer: (state, action) => {
+  state.fileDetail = action.payload
 }
   },
   extraReducers: (builder) => {
@@ -60,7 +68,7 @@ getBlogDetailReducer: (state, action) => {
   },
 });
 
-export const {getBookReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer} = bookSlice.actions;
+export const {getBookReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer,getAllPenaltyReducer,getFileByIdReducer} = bookSlice.actions;
 export default bookSlice.reducer;
 
 export const getAllBook = createAsyncThunk("book", async (query?: any) => {
@@ -108,6 +116,22 @@ export const deleteBook = (id: string) => {
     }
   };
 };
+
+export const deleteFile = (id: string) => {
+  return async () => {
+    try {
+      const respone: AxiosResponse = await http.delete(
+        `/api/file/${id}`
+      );
+      toast.success(respone.data.message);
+      return respone.data.metadata;
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
 
 
 export const updateCoveredBook = (id: string, fromdata: any) => {
@@ -353,6 +377,50 @@ export const getAllFile = () => {
         '/api/file'
       );
        dispatch(getAllFileReducer(respone.data.metadata))
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+export const getFileById = (id: any) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.get(
+        `/api/file/${id}`
+      );
+       dispatch(getFileByIdReducer(respone.data.metadata))
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+export const getAllPenalty = () => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.get(
+        '/api/penalty'
+      );
+       dispatch(getAllPenaltyReducer(respone.data.metadata))
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+
+export const createPenalty = (data: any) => {
+  return async () => {
+    try {
+      const respone: AxiosResponse = await http.post(
+        '/api/penalty', data
+      );
+      toast.success(respone.data.message);
+      return respone
     } catch (e) {
       const errors = e as any;
       toast.error(errors?.response?.data?.message)

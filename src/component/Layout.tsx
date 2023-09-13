@@ -55,6 +55,7 @@ const Layout = () => {
         <Route index path="/:id" element={userRole?.role || user?.role === "user" ? <DetailBook /> : <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/list-book-borrow/:id" element={userRole?.role || user?.role === "user" ? <ListBookBorrow /> : <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/blog/:id" element={<BlogDetail/>}></Route>
+        <Route index path="/file/:id" element={<BlogDetail/>}></Route>
         <Route index path="/auth/:token" element={<VerifyTocken/>}></Route>
         <Route index path="/admin" element={userRole?.role || user?.role === "admin" ? <HomeAdmin /> :   <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/" element={userRole?.role || user?.role === "user" ? <Home /> : <Navigate to="/login-form" replace={true} />}></Route>

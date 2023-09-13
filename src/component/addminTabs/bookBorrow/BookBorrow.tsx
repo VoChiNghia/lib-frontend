@@ -1,104 +1,128 @@
-import React, { useEffect,useRef, useState } from "react";
-import "./bookBorrow.scss";
-import Select from "../../customSelect/Select";
-import ButtonSolid from "../../button/ButtonSolid";
-import Search from "../../search/Search";
-import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import React, { useEffect, useRef, useState } from "react"
+import "./bookBorrow.scss"
+import Select from "../../customSelect/Select"
+import ButtonSolid from "../../button/ButtonSolid"
+import Search from "../../search/Search"
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai"
+import { changeComponent, setIsOpenCompoent } from "../../../redux/reducer/modal"
+import { useDispatch, useSelector } from "react-redux"
+import AddBook from "../../form/formAddBook/AddBook"
 import {
-  changeComponent,
-  setIsOpenCompoent,
-} from "../../../redux/reducer/modal";
-import { useDispatch, useSelector } from "react-redux";
-import AddBook from "../../form/formAddBook/AddBook";
-import { deleteBook, deleteBookBorrow, getAllBook, getAllBorrowBook, updateStatusBorrowBook } from "../../../redux/reducer/book";
-import { DispatchType, RootState } from "../../../redux/store";
-import { getAllCategory } from "../../../redux/reducer/category";
-import UploadCoverImage from "../../form/formUpdateCoverBook";
-import Pagination from "../../pagination/Pagination";
-import { LIMIT } from "../../../constant";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
-import Confirmation from "../../confirmation/Confirmation";
+  deleteBook,
+  deleteBookBorrow,
+  getAllBook,
+  getAllBorrowBook,
+  getAllPenalty,
+  updateStatusBorrowBook,
+} from "../../../redux/reducer/book"
+import { DispatchType, RootState } from "../../../redux/store"
+import { getAllCategory } from "../../../redux/reducer/category"
+import UploadCoverImage from "../../form/formUpdateCoverBook"
+import Pagination from "../../pagination/Pagination"
+import { LIMIT } from "../../../constant"
+import moment from "moment"
+import { useParams } from "react-router-dom"
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog"
+import { Toast } from "primereact/toast"
+import Confirmation from "../../confirmation/Confirmation"
+import { DataTable } from "primereact/datatable"
+import { Column } from "primereact/column"
+import { Button } from "primereact/button"
+import FormPenalty from "../../form/formPenalty/FormApprove"
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
+import FormApprove from "../../form/formAprove/FormApprove"
 const BookBorrow = () => {
-  const toast = useRef<any>(null);
-  const [visible, setVisible] = useState<boolean>(false);
-  const [type, setType] = useState<string>('');
-  const [actionData, setActionData] = useState(null);
-  // const { book, totalBooks } = useSelector((state: RootState) => state.book);
-  // const { getListBorrowBook } = useSelector((state: RootState) => state.book)
-  // const [currentPage, setCurrentPage] = useState<number>(1)
-  // const query = {
-  //   limit: LIMIT,
-  //   page: currentPage,
-  // }
-  // console.log(getListBorrowBook)
-  // const totalPage = Math.floor(totalBooks / LIMIT)
-  // const dispatch: DispatchType = useDispatch();
-  
-  // const getAllBookApi = () => {
-  //   dispatch(getAllBook(query));
-  //   dispatch(getAllCategory())
-  //   dispatch(getAllBorrowBook())
-  // };
+  const toast = useRef<any>(null)
+  const [visible, setVisible] = useState<boolean>(false)
+  const [type, setType] = useState<string>("")
+  const [actionData, setActionData] = useState(null)
 
-  // useEffect(() => {
-  //   getAllBookApi()
-  // },[])
-  
+  const { getListBorrowBook,allPenalty } = useSelector((state: RootState) => state.book)
 
-
-  // const handleSubmit = () => {
-  //   dispatch(changeComponent(<AddBook />));
-  //   dispatch(setIsOpenCompoent(true));
-  // };
-
-  // const hanldeEdit = (item: any) => {
-  //   dispatch(changeComponent(<AddBook value={item} />));
-  //   dispatch(setIsOpenCompoent(true));
-  // };
-  // const hanldeDelete = (id: string) => {
-  //   dispatch(deleteBook(id))
-  // };
-  // const updateCoverBook = (id: string) => {
-  //   dispatch(changeComponent(<UploadCoverImage idUpdate={id}/>));
-  //   dispatch(setIsOpenCompoent(true));
-  // }
-
-  const { getListBorrowBook } = useSelector((state: RootState) => state.book)
   const dispatch: DispatchType = useDispatch()
 
   useEffect(() => {
     dispatch(getAllBorrowBook())
+    dispatch(getAllPenalty())
   }, [])
-
+  console.log(allPenalty)
   const hanldeEdit = (item: any) => {}
   const hanldeDelete = (id: any) => {
     dispatch(deleteBookBorrow(id))
     dispatch(getAllBorrowBook())
+   
   }
   const handleSubmit = () => {}
-  const handleUpdateStatus = async (item:any) => {
-    const action = {
-      id: item._id,
-      status: 'approved'
-    }
-   await dispatch(updateStatusBorrowBook(action))
-   await dispatch(getAllBorrowBook())
+  const handleUpdateStatus = async (item: any) => {
+    // const action = {
+    //   id: item._id,
+    //   status: "approved",
+    // }
+    // await dispatch(updateStatusBorrowBook(action))
+    // await dispatch(getAllBorrowBook())
+    dispatch(changeComponent(<FormApprove id={item._id} />))
+    dispatch(setIsOpenCompoent(true))
+    
   }
 
   const accept = async () => {
-    setVisible(false);
-    if(type === 'update') handleUpdateStatus(actionData)
-    if(type === 'delete') hanldeDelete(actionData)
-    
-
-  };
+    setVisible(false)
+    if (type === "update") handleUpdateStatus(actionData)
+    if (type === "delete") hanldeDelete(actionData)
+  }
 
   const reject = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
+
+  const representativeBodyTemplate = (item: any) => {
+    return (
+      <div onClick={() => handleUpdateStatus(item)}>
+        {item?.status === "due" ? (
+          <p className="bg-red-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        ) : item?.status === "approved" ? (
+          <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        ) : (
+          <p className="bg-yellow-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        )}
+      </div>
+    )
+  }
+
+  const representativeBodyTemplate4 = (item: any) => {
+    return (
+      <div className="w-full">
+        <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel" onClick={() => hanldeEdit(item)}/>
+        <Button icon="pi pi-times" rounded text severity="danger" aria-label="Cancel" onClick={() => {
+            setType("delete")
+            setVisible(true)
+            setActionData(item._id)
+          }} />
+      </div>
+    )
+  }
+  const representativePenalty = (item: any) => {
+    return (
+      <div>
+         <Button icon="pi pi-bell" rounded severity="warning" aria-label="Notification" onClick={() => handlePenalty(item)}/>
+      </div>
+    )
+  }
+
+  const handlePenalty= (item: any) => {
+    dispatch(changeComponent(<FormPenalty item={item} />))
+    dispatch(setIsOpenCompoent(true))
+  }
+ 
+  const dateBodyTemplate = (rowData: any) => {
+    const date: any = moment(rowData.borrowedDate).format("DD-MM-YYYY")
+    return <div>{date}</div>
+  }
+  const dateBodyTemplate2 = (rowData: any) => {
+    const date: any = moment(rowData.returnDate).format("DD-MM-YYYY")
+    return <div>{date}</div>
+  }
+
   return (
     <div className="book__manage">
       <ConfirmDialog
@@ -110,62 +134,83 @@ const BookBorrow = () => {
         accept={accept}
         reject={reject}
       />
-      <table className="book__manage__wrapper__list__book">
-              <thead className="book__manage__wrapper__list__book-header">
-                <tr>
-                  <th>STT</th>
-                  <th>Tên</th>
-                  <th>Tên sách</th>
-                  <th>Ngày mượn</th>
-                  <th>Ngày trả</th>
-                  <th>Trạng thái</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody className="book__manage__wrapper__list__book-body">
-                {getListBorrowBook?.map((item: any, index: number) => (
-                  <tr key={index} className="book__manage__wrapper__list__book-body__row text-center" >
-                    <td className="text-sm p-1">{index + 1}</td>
-                    <td className="text-sm p-1">{item?.userId?.name}</td>
-                    <td className="text-sm p-1">{item?.bookId?.name}</td>
-                    <td className="text-sm p-1">{moment(item?.borrowedDate).format("DD-MM-YYYY")}</td>
-                    <td className="text-sm p-1">{moment(item?.returnDate).format("DD-MM-YYYY")}</td>
-                    <td className="text-sm p-1">
-                     <div className="hover:scale-110" onClick={() =>  {
-                      setType('update')
-                      setVisible(true)
-                      setActionData(item)
-                     }}>
-                     {item?.status === "due" ? (
-                        <p className="bg-red-600 w-20 text-white text-center rounded-xl mx-auto">{item?.status}</p>
-                      ) : item?.status === "approved" ?  <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto">{item?.status}</p> : (
-                        <p className="bg-yellow-600 w-20 text-white text-center rounded-xl mx-auto">{item?.status}</p>
-                      )}
-                     </div>
-                    </td>
 
-                    <td className="text-sm p-1">
-                      <button onClick={() => hanldeEdit(item)} className="btn-edit">
-                        <span>
-                          <AiOutlineEdit />
-                        </span>
-                      </button>
-                      <button onClick={() => {
-                        setType('delete')
-                      setVisible(true)
-                      setActionData(item._id)
-                     }} className="btn-delete">
-                        <span>
-                          <AiOutlineDelete />
-                        </span>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+<Tabs>
+    <TabList>
+      <Tab>Sách mượn</Tab>
+      <Tab>Phiếu phạt</Tab>
+    </TabList>
+
+    <TabPanel>
+    <DataTable
+        scrollable
+        value={getListBorrowBook}
+        paginator
+        rows={4}
+        rowsPerPageOptions={[4, 5, 10, 25, 50]}
+        tableStyle={{ minWidth: "50rem" }}
+      >
+        {/* <Column field="image" body={representativeBodyTemplate2} header="Hình ảnh" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column> */}
+        <Column field="userId.name" header="Tên" filter sortable style={{ width: "15%", fontSize: "13px" }}></Column>
+        <Column
+          field="bookId.name"
+          header="Tên Sách"
+          filter
+          sortable
+          style={{ width: "25%", fontSize: "13px" }}
+        ></Column>
+        <Column
+          field="borrowedDate"
+          header="Ngày mượn"
+          body={dateBodyTemplate}
+          filter
+          sortable
+          filterField="date"
+          dataType="date"
+          style={{ width: "15%", fontSize: "13px" }}
+        ></Column>
+        <Column
+          field="returnDate"
+          header="Ngày trả"
+          body={dateBodyTemplate2}
+          filter
+          sortable
+          style={{ width: "15%", fontSize: "13px" }}
+        ></Column>
+        <Column
+          field="borrowedBook"
+          body={representativeBodyTemplate}
+          header="Trạng thái"
+          style={{ width: "10%", fontSize: "13px" }}
+        ></Column>
+        <Column
+          field=""
+          body={representativePenalty}
+          header="Action"
+          style={{ width: "15%", fontSize: "13px" }}
+        ></Column>
+        <Column
+          field=""
+          body={representativeBodyTemplate4}
+          header="Actions"
+          style={{ width: "25%", fontSize: "13px" }}
+        ></Column>
+        
+      </DataTable>
+    </TabPanel>
+    <TabPanel>
+    <DataTable scrollable  value={allPenalty} paginator rows={4} rowsPerPageOptions={[4,5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+    <Column field="bookId.name" header="Tên Sách" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column field="userId.name" header="Tên người dung" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column field="reason" header="Lý do" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column field="requireRecover" header="Hình thức xử lý"filter sortable  style={{ width: '10%',fontSize:'13px' }}></Column>
+</DataTable>
+    </TabPanel>
+  </Tabs>
+
+      
     </div>
-  );
-};
+  )
+}
 
-export default BookBorrow;
+export default BookBorrow
