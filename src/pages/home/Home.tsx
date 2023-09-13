@@ -15,7 +15,6 @@ import { Link } from "react-router-dom"
 const Home = () => {
   const dispatch: DispatchType = useDispatch()
   const { book, totalBooks, allBlog, allFile } = useSelector((state: RootState) => state.book);
-  console.log(allBlog)
   const getAllBookApi = () => {
     dispatch(getAllBook(''));
     dispatch(getAllCategory())
@@ -25,7 +24,6 @@ const Home = () => {
   };
   useEffect(() => {
     getAllBookApi();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -73,6 +71,7 @@ const Home = () => {
             <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Tài liệu</h1>
               <div className="flex">
               {
+                 
             allFile?.slice(0,4).map((blog: any,index: any) => (
               <Link to={`/file/${blog._id}`}>
               <div className="w-64 h-96 mx-2 flex flex-col justify-between">

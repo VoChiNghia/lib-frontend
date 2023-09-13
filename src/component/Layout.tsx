@@ -15,11 +15,15 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import RegisterForm from "../pages/registerForm/RegisterForm"
+import 'primeicons/primeicons.css';
+import ConfirmationLink from "../pages/confirmation/Confirmation"
+import VerifyTocken from "../pages/verify/VerifyTocken"
+import ShowAllBook from "../pages/showAllBook/ShowAllBook"
+import ShowAllFile from "../pages/showAllFile/ShowAllFile"
 
 export const history = createBrowserHistory({ v5Compat: true })
 const Layout = () => {
   const {user} = useSelector((state: RootState) => state.authSlice)
-  console.log(user)
   const [userRole, setUserRole] = useState<any>(JSON.parse(localStorage.getItem(USER) as string) ?? '');
   console.log(userRole)
   useEffect(() => {
@@ -45,10 +49,13 @@ const Layout = () => {
         <Route path="/register-form" element={!userRole?.role ? <RegisterForm /> : <Navigate to="/" replace={true} />}></Route>
         <Route path="/login-form" element={!userRole?.role ? <LoginForm /> : <Navigate to="/" replace={true} />}></Route>
         <Route path="/login" element={!userRole?.role ? <LoginForm /> : <Navigate to="/" replace={true} />}></Route>
-
+        <Route path="/confirmation" element={<ConfirmationLink/>}></Route>
+        <Route path="/show-all-book" element={<ShowAllBook/>}></Route>
+        <Route path="/show-all-file" element={<ShowAllFile/>}></Route>
         <Route index path="/:id" element={userRole?.role || user?.role === "user" ? <DetailBook /> : <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/list-book-borrow/:id" element={userRole?.role || user?.role === "user" ? <ListBookBorrow /> : <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/blog/:id" element={<BlogDetail/>}></Route>
+        <Route index path="/auth/:token" element={<VerifyTocken/>}></Route>
         <Route index path="/admin" element={userRole?.role || user?.role === "admin" ? <HomeAdmin /> :   <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/" element={userRole?.role || user?.role === "user" ? <Home /> : <Navigate to="/login-form" replace={true} />}></Route>
       </Routes>

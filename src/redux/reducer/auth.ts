@@ -34,6 +34,7 @@ const authSlice = createSlice({
         state.user = action.payload.user
         state.login = user
         state.loading = false;
+        console.log(123)
 
         if(user?.role === 'user') {
           history.push('/')
@@ -59,6 +60,19 @@ export const login = createAsyncThunk("auth/login", async (data: any) => {
   }
 });
 
+export const register = createAsyncThunk("auth/signup", async (data: any) => {
+  try {
+    const respone: any = await http.post("/api/auth/signup", data);
+    if(respone.status === 201){
+      history.push('/confirmation')
+    }
+    return respone.data.metadata
+  } catch (e) {
+    const errors = e as any;
+    toast.error(errors?.response?.data?.message)
+  }
+});
+
 export const logout = createAsyncThunk("auth/logout", async (id: string) => {
   try {
     const respone:AxiosResponse = await http.delete(`/api/auth/logout/${id}`);
@@ -68,3 +82,5 @@ export const logout = createAsyncThunk("auth/logout", async (id: string) => {
     toast.error(errors?.response?.data?.message)
   }
 });
+
+

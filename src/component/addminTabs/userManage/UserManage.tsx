@@ -19,6 +19,11 @@ import { deleteUser, getAllUser } from "../../../redux/reducer/user";
 import UpdateUser from "../../form/formAddUpdateUser/updateUser";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import Confirmation from "../../confirmation/Confirmation";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Tooltip } from 'primereact/tooltip';
+import { Button } from "primereact/button";
+import { exportToExcel } from "../../../utilities/u";
 const UserManage = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -29,7 +34,6 @@ const UserManage = () => {
     limit: LIMIT,
     page: currentPage,
   }
-  console.log(user)
   //const totalPage = Math.floor(totalBooks / LIMIT)
   const dispatch: DispatchType = useDispatch();
   
@@ -56,69 +60,11 @@ const UserManage = () => {
 
   };
 
-  const reject = () => {
-    // Xử lý khi người dùng từ chối xác nhận hoặc đóng hộp thoại
-    setVisible(false);
-  };
-
-  return (
-    <div className="book__manage">
-      <h1>Danh sách hiện có</h1>
-      <div className="book__manage__control">
-        <div className="book__manage__control-btn">
-          {/* <ButtonSolid text="Thêm sách" onSubmit={handleSubmit} outline /> */}
-        </div>
-        <div className="book__manage__control-field">
-          <Select
-            options={[{ value: 1, label: "2" }]}
-            selectedOption="1"
-            onSelect={() => {}}
-          />
-          <Search />
-        </div>
-      </div>
-      
-      <div className="book__manage__wrapper">
-        <table className="book__manage__wrapper__list__book">
-          <thead className="book__manage__wrapper__list__book-header">
-            <tr>
-              <th>STT</th>
-              <th>Tên</th>
-              <th>Mail</th>
-              <th>Address</th>
-              <th>Số điện thoại</th>
-              <th>Phân quyền</th>
-              <th>Sách mượn</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody className="book__manage__wrapper__list__book-body">
-            {user?.map((item: any,index: number) => (
-              <tr key={index} className="book__manage__wrapper__list__book-body__row">
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  {index + 1}
-                </td>
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  {item.name}
-                </td>
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  {item.email}
-                </td>
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  {item.address}
-                </td>
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  {item.phoneNumber}
-                </td>
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  {item.role}
-                </td>
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  {item.borrowedBook}
-                </td>
-                
-                <td className="book__manage__wrapper__list__book-body__row-item">
-                  <button onClick={() => hanldeEdit(item)} className="btn-edit">
+  const representativeBodyTemplate = (rowData: any) => {
+    return (
+        <div className="flex align-items-center gap-2">
+            
+            <button onClick={() => hanldeEdit(rowData)} className="btn-edit">
                     <span>
                       <AiOutlineEdit />
                     </span>
@@ -126,18 +72,36 @@ const UserManage = () => {
                   <button onClick={() => {
                     setType('delete')
                     setVisible(true)
-                    setActionData(item._id)
+                    setActionData(rowData._id)
                   }} className="btn-delete">
                     <span>
                       <AiOutlineDelete />
                     </span>
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-              {/* {totalPage === 0 ? null : <Pagination totalPage={totalPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />} */}
+        </div>
+    );
+};
+
+  const reject = () => {
+    // Xử lý khi người dùng từ chối xác nhận hoặc đóng hộp thoại
+    setVisible(false);
+  };
+  return (
+    <div className="book__manage">
+      <div className="flex justify-between">
+      <h1 className="font-bold">Danh sách hiện có</h1>
+      <Button className="mx-4 my-2" label="Export" icon='pi pi-file-excel' severity="info" onClick={() => exportToExcel(user)} rounded />
+      </div>
+      <div className="book__manage__wrapper">
+      <DataTable value={user} scrollable  paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+    <Column field="name" header="Tên"  sortable  style={{ width: '25%',fontSize:'14px' }}></Column>
+    <Column field="email" header="Mail" sortable  style={{ width: '25%',fontSize:'14px' }}></Column>
+    <Column field="address" header="Địa chỉ" sortable  style={{ width: '25%',fontSize:'14px' }}></Column>
+    <Column field="phoneNumber" header="Sdt" sortable  style={{ width: '25%',fontSize:'14px' }}></Column>
+    <Column field="role" header="Phân quyền" sortable  style={{ width: '25%',fontSize:'14px' }}></Column>
+    <Column field="borrowedBook" body={representativeBodyTemplate} header="sach mượn" sortable  style={{ width: '25%',fontSize:'14px' }}></Column>
+</DataTable>
+
       </div>
       <ConfirmDialog
         visible={visible}

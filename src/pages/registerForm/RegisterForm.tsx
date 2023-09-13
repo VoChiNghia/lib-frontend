@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineEye } from "react-icons/ai";
 import {useDispatch, useSelector} from 'react-redux'
-import { login } from "../../redux/reducer/auth";
+import { login, register } from "../../redux/reducer/auth";
 import { DispatchType, RootState } from "../../redux/store";
 import Loading from "../../component/loading/Loading";
 const logo1 = require("../../assets/images/icon-3.webp");
@@ -23,7 +23,7 @@ const RegisterForm = () => {
       <div className="login-form-wrapper">
         <Formik
           initialValues={{
-            email: "nghiakg11432@gmail.com",
+            email: "",
             password: "",
             name: "",
             phoneNumber: "",
@@ -45,7 +45,7 @@ const RegisterForm = () => {
               .required("Phone is required"),
           })}
           onSubmit={(values: any) => {
-            dispatch(login(values))
+            dispatch(register(values))
           }}
         >
           {({ handleSubmit, errors,isValid,dirty }) => {
@@ -74,7 +74,7 @@ const RegisterForm = () => {
                   <div className="form-control">
                     <Field
                       type="text"
-                      name="name"
+                      name="phoneNumber"
                       className={errors.phoneNumber ? "error" : ""}
                     />
                   </div>

@@ -53,13 +53,7 @@ const HomeAdmin = () => {
     startTransition(() => setcomponent(strategy[type as keyof  StrategyType]))
     
   };
-  const handleSubmit = () => {
-    localStorage.removeItem(TOKEN);
-    localStorage.removeItem(USER);
-    history.push("/login");
-    window.location.reload();
-    dispatch(logout(login && JSON.parse(login)._id))
-  };
+
   return (
     <div className="home bg-[#ccc]">
       <div className="home-container container">
@@ -141,15 +135,6 @@ const HomeAdmin = () => {
               </div>
             </li>
           </ul>
-          <div className="home-container__left-side__btn">
-            <ButtonSolid
-              text="Logout"
-              onSubmit={handleSubmit}
-              icons={<CiLogout />}
-              background="#FFF2E7"
-              color="#FF7506"
-            />
-          </div>
         </div>
         <div className="home-container__right-side">
           <div className="home-container__right-side__head">
