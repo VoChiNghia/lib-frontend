@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { login, register } from "../../redux/reducer/auth";
 import { DispatchType, RootState } from "../../redux/store";
 import Loading from "../../component/loading/Loading";
+import { Link } from "react-router-dom";
 const logo1 = require("../../assets/images/icon-3.webp");
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -104,10 +105,12 @@ const RegisterForm = () => {
                   </div>
                 </div>
               </Form>
-              <span>Quên mật khẩu</span>
+              <span>Quên mật khẩu?</span>
             </div>
 
-            <div className="btn-login">
+              <Link to='/login-form'><span className="text-blue-500 cursor-pointer my-2 text-blue-500">Đăng nhập</span></Link>
+            <div className="btn-login text-center">
+
               <ButtonSolid submit={true} onSubmit={handleSubmit} text="Đăng Ký" disabled={!dirty || !isValid}/>
             </div>
           </div>

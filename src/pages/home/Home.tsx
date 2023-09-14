@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import "./home.scss"
 import Header from "../../componentClient/header/Header"
 import BookTicket from "../../componentClient/bookTicket/BookTicket"
@@ -12,19 +12,67 @@ import { DispatchType, RootState } from "../../redux/store"
 import { getAllBlog, getAllBook, getAllFile } from "../../redux/reducer/book"
 import { getAllCategory } from "../../redux/reducer/category"
 import { Link } from "react-router-dom"
+import { Button } from "primereact/button"
+import { Carousel } from "primereact/carousel"
 const Home = () => {
   const dispatch: DispatchType = useDispatch()
-  const { book, totalBooks, allBlog, allFile } = useSelector((state: RootState) => state.book);
+  const { book, totalBooks, allBlog, allFile } = useSelector((state: RootState) => state.book)
   const getAllBookApi = () => {
-    dispatch(getAllBook(''));
+    dispatch(getAllBook(""))
     dispatch(getAllCategory())
     dispatch(getAllBlog())
     dispatch(getAllFile())
-
-  };
+  }
   useEffect(() => {
-    getAllBookApi();
-  }, []);
+    getAllBookApi()
+  }, [])
+console.log(book)
+  const [products, setProducts] = useState([
+    {
+      title: "Nhớ rằng đôi khi không quan trọng nơi bạn đang đi, chỉ là bạn đang đi cùng ai.",
+      author: "Mahatma Gandhi",
+    },
+    {
+      title: "Tôi không có quyền quyết định điều gì sẽ xảy ra với tôi, nhưng tôi có quyền quyết định làm gì với những gì xảy ra.",
+      author: "Mary Engelbreit",
+    },
+    {
+      title: "Cuộc sống không phải là việc bạn sống trong bao lâu, mà là bạn sống như thế nào.",
+      author: "Tara Westover",
+    },
+    {
+      title: "Không có người đàn ông nào đứng ở đỉnh núi mà không phải bắt đầu từ dưới đáy.",
+      author: "Richard C. Miller",
+    },
+  ])
+  const responsiveOptions = [
+    {
+      breakpoint: "1199px",
+      numVisible: 1,
+      numScroll: 1,
+    },
+    {
+      breakpoint: "991px",
+      numVisible: 2,
+      numScroll: 1,
+    },
+    {
+      breakpoint: "767px",
+      numVisible: 1,
+      numScroll: 1,
+    },
+  ]
+
+  const productTemplate = (product: any) => {
+    return (
+      <div className=" blockquote-wrapper border-1 surface-border border-round rounded m-2 text-center py-5 px-3">
+        <div className="quote--container">
+          <p className="quote text-xl bold">{product.title}</p>
+          <p className="quote--author">&ndash; {product.author}</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="home bg-white">
@@ -53,55 +101,56 @@ const Home = () => {
                 </SwiperSlide>
               </Swiper>
             </div>
+
+            <div className="bg-gray-200 m-0 p-0">
+              <Carousel
+                value={products}
+                numVisible={1}
+                numScroll={1}
+                showIndicators={false}
+                className="custom-carousel m-0 p-0 "
+                autoplayInterval={10000}
+                itemTemplate={productTemplate}
+              />
+            </div>
             <div className="mt-6">
               <h1 className="bg-[#FF9138] p-2 font-bold rounded text-white">Book</h1>
-            <div className="my-2 grid grid-cols-5 gap-4">
-              {
-                book?.slice(0,10).map((book: any,index: any) => (
-                 
-                    <BookTicket key={index} book={book}/>
-                  
-                ))
-              }
-            </div>
+              <div className="my-2 grid grid-cols-5 gap-4">
+                {book?.slice(0, 10).map((book: any, index: any) => (
+                  <BookTicket key={index} book={book} />
+                ))}
+              </div>
             </div>
 
+            <div>
+              <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Tài liệu</h1>
+              <div className="flex">
+                {allFile?.slice(0, 4).map((blog: any, index: any) => (
+                  <Link to={`/file/${blog._id}`}>
+                    <div className="w-64 h-96 mx-2 flex flex-col justify-between">
+                      <img className="w-64" src={blog.image} alt="" />
+                      <p className="font-bold text-xl text-center">{blog.tenMonHoc.toUpperCase()}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
 
             <div>
-            <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Tài liệu</h1>
+              <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Bài viết mới</h1>
               <div className="flex">
-              {
-                 
-            allFile?.slice(0,4).map((blog: any,index: any) => (
-              <Link to={`/file/${blog._id}`}>
-              <div className="w-64 h-96 mx-2 flex flex-col justify-between">
-                <img className="w-64" src={blog.image} alt="" />
-                <p className="font-bold text-xl text-center">{blog.tenMonHoc.toUpperCase()}</p>
+                {allBlog?.slice(0, 4).map((blog: any, index: any) => (
+                  <Link to={`/blog/${blog._id}`}>
+                    <div className="w-64 mx-2">
+                      <img className="w-64" src={blog.thumbnail} alt="" />
+                      <p className="font-bold text-xl text-center">{blog.title}</p>
+                    </div>
+                  </Link>
+                ))}
               </div>
-              </Link>
-              ))
-          }
-              </div>
-        </div>
-
-            <div>
-            <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Bài viết mới</h1>
-              <div className="flex">
-              {
-            allBlog?.slice(0,4).map((blog: any,index: any) => (
-              <Link to={`/blog/${blog._id}`}>
-              <div className="w-64 mx-2">
-                <img className="w-64" src={blog.thumbnail} alt="" />
-                <p className="font-bold text-xl text-center">{blog.title}</p>
-              </div>
-              </Link>
-              ))
-          }
-              </div>
-        </div>
+            </div>
           </div>
         </div>
-        
       </div>
     </div>
   )

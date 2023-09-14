@@ -67,7 +67,7 @@ const UpdateUser = (props: AddBookProps) => {
       <div className="add-book__wrapper">
         <div className="add-book">
           <div className="add-book__body">
-            <h1>Cập nhập thông tin người dùng</h1>
+            <h1 className="font-bold">Cập nhập thông tin người dùng</h1>
 
             <Formik
               initialValues={initialValues}
@@ -81,7 +81,7 @@ const UpdateUser = (props: AddBookProps) => {
                   <div className="form__container">
                     <div className="form__container__left">
                       <div className="form-group">
-                        <p>tên người dùng</p>
+                        <p>Tên người dùng</p>
                         <Field
                           className="form-control"
                           name="name"

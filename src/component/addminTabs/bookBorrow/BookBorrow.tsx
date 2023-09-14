@@ -54,12 +54,6 @@ const BookBorrow = () => {
   }
   const handleSubmit = () => {}
   const handleUpdateStatus = async (item: any) => {
-    // const action = {
-    //   id: item._id,
-    //   status: "approved",
-    // }
-    // await dispatch(updateStatusBorrowBook(action))
-    // await dispatch(getAllBorrowBook())
     dispatch(changeComponent(<FormApprove id={item._id} />))
     dispatch(setIsOpenCompoent(true))
     

@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 export const TOKEN = "accessToken";
 export const USER = "user";
 export const ID = "id";
+export const API_KEY = 'AIzaSyDXW-0lI8Opo0Nqx8F4sfnSRTIAieJRhqU'
 
 const http = axios.create({
   // baseURL: "http://localhost:8080/v1",

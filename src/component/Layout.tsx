@@ -20,6 +20,7 @@ import ConfirmationLink from "../pages/confirmation/Confirmation"
 import VerifyTocken from "../pages/verify/VerifyTocken"
 import ShowAllBook from "../pages/showAllBook/ShowAllBook"
 import ShowAllFile from "../pages/showAllFile/ShowAllFile"
+import Profile from "../pages/profile/Profile"
 
 export const history = createBrowserHistory({ v5Compat: true })
 const Layout = () => {
@@ -56,6 +57,7 @@ const Layout = () => {
         <Route index path="/list-book-borrow/:id" element={userRole?.role || user?.role === "user" ? <ListBookBorrow /> : <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/blog/:id" element={<BlogDetail/>}></Route>
         <Route index path="/file/:id" element={<BlogDetail/>}></Route>
+        <Route index path="/profile" element={<Profile/>}></Route>
         <Route index path="/auth/:token" element={<VerifyTocken/>}></Route>
         <Route index path="/admin" element={userRole?.role || user?.role === "admin" ? <HomeAdmin /> :   <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/" element={userRole?.role || user?.role === "user" ? <Home /> : <Navigate to="/login-form" replace={true} />}></Route>

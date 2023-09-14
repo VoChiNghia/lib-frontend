@@ -6,12 +6,13 @@ import { Link } from "react-router-dom"
 import { USER } from "../../config/axios"
 import { AiOutlineMenu } from "react-icons/ai"
 import { history } from "../../component/Layout"
+import { Button } from "primereact/button"
 const logo = require("../../assets/images/icon-3.webp")
 const Header = () => {
   const [user, setUser] = useState<any>(null)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  
   function useClickOutside(ref: React.RefObject<HTMLElement>, callback: () => void) {
     const handleClick = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -49,9 +50,26 @@ const Header = () => {
    localStorage.clear();
    history.push('/login-form')
   };
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <div className="header">
+    <div className={`header w-[1280px] ${scrolling ? 'fixed-header' : ''}`}>
       <div className="header__left">
         <div className="header__left__logo">
           <Link to="/"><img src={logo} alt="" /></Link>
@@ -70,14 +88,14 @@ const Header = () => {
           <div className="header__right-btn ">
             <div className="flex items-center">
               <p className="font-bold mx-2"> Xin Chào: {user?.name}</p>
-              
+              <p><Button icon="pi pi-bell" rounded text severity="warning" aria-label="Notification" /></p>
               <div className="relative" ref={dropdownRef}>
               <p
-                className="hover:scale-105 border-solid border-[1px] border-gray-500 transition-all rounded-lg px-2 py-1 drop-shadow"
+                className="hover:scale-105 "
                 onClick={toggleDropdown}
               >
                 <span>
-                  <AiOutlineMenu />
+                <Button icon="pi pi-bars" rounded text raised severity="warning" aria-label="Notification" />
                 </span>
               </p>
                 {isOpen && (
