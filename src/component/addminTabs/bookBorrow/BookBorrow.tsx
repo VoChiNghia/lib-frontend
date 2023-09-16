@@ -71,13 +71,23 @@ const BookBorrow = () => {
   const representativeBodyTemplate = (item: any) => {
     return (
       <div onClick={() => handleUpdateStatus(item)}>
-        {item?.status === "due" ? (
+        {item?.status === "due" 
+        ? (
           <p className="bg-red-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        ) : item?.status === "approved" ? (
+        ) 
+        : item?.status === "approved" 
+        ? (
           <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        ) : (
+        )
+        :  item?.status === "return" ?  <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        :  item?.status === "borrowed" ?  <p className="bg-blue-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        :
+        (
           <p className="bg-yellow-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        )}
+        )
+       
+        
+        }
       </div>
     )
   }

@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux'
 import { logout } from '../../redux/reducer/auth'
 import { history } from '../Layout'
 const Header = () => {
-    const dispatch = useDispatch()
     const handleSubmit = () => {
         localStorage.removeItem(TOKEN);
         localStorage.removeItem(USER);
@@ -17,9 +16,6 @@ const Header = () => {
     <div className="header">
         <div className="header__breadcrumb flex font-bold">
             <h1>Dashboard</h1>
-            <ul className="mx-4">
-                <li className='cursor-pointer hover:text-orange-600'>Tạo mới blog</li>
-            </ul>
         </div>
         <div className="header__profile">
             <div className="header__profile-bell">

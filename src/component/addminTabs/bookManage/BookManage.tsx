@@ -16,13 +16,14 @@ import { LIMIT } from "../../../constant"
 import AddFile from "../../form/formAddFile/AddFile"
 import { ConfirmDialog } from "primereact/confirmdialog"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
-import UploadCoverImageFile from "../../form/formUpdateCoverBook copy"
+import UploadCoverImageFile from "../../form/formUpdateFilePdf"
 import ExportToExcel from "../../../utilities/exportExcel"
 import { Dropdown } from "primereact/dropdown"
 import { InputText } from "primereact/inputtext"
 import { Button } from "primereact/button"
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import UploadFilepdf from "../../form/formUpdateFilePdf"
 const BookManage = () => {
   const { book, totalBooks, allFile } = useSelector((state: RootState) => state.book)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -56,14 +57,14 @@ const BookManage = () => {
   const dispatch: DispatchType = useDispatch()
 
   const getAllBookApi = () => {
-    dispatch(getAllBook(query))
+    dispatch(getAllBook(''))
     dispatch(getAllCategory())
     dispatch(getAllFile())
   }
   useEffect(() => {
     getAllBookApi()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage])
+  }, [])
 
   const handleSubmit = () => {
     dispatch(changeComponent(<AddFile />))
@@ -93,47 +94,43 @@ const BookManage = () => {
   const accept = async () => {
     setVisible(false)
     if (type === "delete") hanldeDelete(actionData)
+    
+  }
+
+  
+  const handleUpdateFileBookPdf = async (id: string) => {
+    dispatch(changeComponent(<UploadFilepdf idUpdate={id} type='book'/>))
+    dispatch(setIsOpenCompoent(true))
+  }
+
+  const handleUpdateFilePdf = async (id: string) => {
+    dispatch(changeComponent(<UploadFilepdf idUpdate={id} type='file'/>))
+    dispatch(setIsOpenCompoent(true))
   }
 
   
   const representativeBodyTemplate = (rowData: any) => {
     return (
-        <div className="flex align-items-center gap-2">
-            
-            <button onClick={() => hanldeEdit(rowData)} className="btn-edit">
-                            <span>
-                              <AiOutlineEdit />
-                            </span>
-                          </button>
-                          <button
-                            onClick={() => {
+
+      <div>
+        <Button icon="pi  pi-file-pdf" rounded text severity="warning" aria-label="Cancel"  onClick={() => handleUpdateFileBookPdf(rowData._id)}/>
+        <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel"  onClick={() => hanldeEdit(rowData)}/>
+        <Button icon="pi pi-times" rounded text severity="danger" aria-label="Cancel" onClick={() => {
                               setType("delete")
                               setVisible(true)
                               setActionData(rowData._id)
-                            }}
-                            className="btn-delete"
-                          >
-                            <span>
-                              <AiOutlineDelete />
-                            </span>
-                          </button>
-        </div>
+                            }}/>
+      </div>
     );
 };
 
 const representativeBodyTemplate4 = (rowData: any) => {
   return (
       <div className="flex align-items-center gap-2">
-                        <button
-                          onClick={() => {
-                            dispatch(deleteFile(rowData._id))
-                          }}
-                          className="btn-delete"
-                        >
-                          <span>
-                            <AiOutlineDelete />
-                          </span>
-                        </button>
+        <Button icon="pi pi-times" rounded text severity="danger" aria-label="Cancel" onClick={() => {
+                               dispatch(deleteFile(rowData._id))
+                               dispatch(getAllFile())
+                            }}/>
       </div>
   );
 };
@@ -164,18 +161,9 @@ const filePdf = (rowData: any) => {
     <div
   >
     {!rowData.filePdf ? (
-                        <p
-                          className="border-[1px] border-solid border-[#ccc] shadow-sm text-center hover:bg-orange-700 transition-all hover:text-white"
-                          onClick={() => updateCoverFile(rowData._id)}
-                        >
-                          Thêm file
-                        </p>
+                        <Button label="Thêm file" className="py-0" severity="secondary" outlined onClick={() => handleUpdateFilePdf(rowData._id)}></Button>
                       ) : (
-                        <a href={rowData.filePdf} target="_blank" rel="noopener noreferrer">
-                          <p className="border-[1px] border-solid border-[#ccc] shadow-sm text-center hover:bg-orange-700 transition-all hover:text-white ">
-                            Mở file
-                          </p>
-                        </a>
+                        <Button label="Mở file" severity="secondary" className="py-0" outlined onClick={() =>  window.open(rowData.filePdf, "_blank")}></Button>
                       )}
   </div>
   );
@@ -207,14 +195,14 @@ const filePdf = (rowData: any) => {
 
           <TabPanel>
           <DataTable scrollable  value={book} paginator rows={4} rowsPerPageOptions={[4,5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-    <Column field="image" body={representativeBodyTemplate2} header="Hình ảnh" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column field="image" body={representativeBodyTemplate2} header="Bìa" filter sortable  style={{ width: '5%',fontSize:'13px' }}></Column>
     <Column field="name" header="Tên Sách" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
     <Column field="author" header="Tác giả" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
     <Column field="publisher" header="Nhà xuất bản" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
     <Column field="publishingYear" header="Năm Xuất Bản"filter sortable  style={{ width: '10%',fontSize:'13px' }}></Column>
     <Column field="category.name" header="Thể loại" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
     <Column field="quantity" header="SL" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
-    <Column field="borrowedBook" body={representativeBodyTemplate} header="sach mượn" sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column field="borrowedBook" body={representativeBodyTemplate} header=""  style={{ width: '35%',fontSize:'13px',padding: '0' }}></Column>
 </DataTable>
           
           </TabPanel>
@@ -227,126 +215,6 @@ const filePdf = (rowData: any) => {
     <Column field="borrowedBook" body={filePdf} header="FilePdf" sortable  style={{ width: '15%',fontSize:'13px' }}></Column>
     <Column field="borrowedBook" body={representativeBodyTemplate4} header="Action" sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
 </DataTable>
-            {/* <table className="book__manage__wrapper__list__book">
-              <thead className="book__manage__wrapper__list__book-header">
-                <tr>
-                  <th>STT</th>
-                  <th>Bìa</th>
-                  <th>Tên khoa</th>
-                  <th>Môn Học</th>
-                  <th>Giáo viên </th>
-                  <th>File pdf</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody className="book__manage__wrapper__list__book-body">
-                {tabsIndex === 1 ? allFile.filter((b: any) => {
-                    if(selectedFile){
-                      return b?.[selectedFile].toLowerCase().includes(search.toLowerCase())
-                    }
-                    return b
-                  })?.map((item: any, index: number) => (
-                  <tr key={index} className="book__manage__wrapper__list__book-body__row text-center">
-                    <td className="book__manage__wrapper__list__book-body__row-item">{index + 1}</td>
-                    <td
-                      className="book__manage__wrapper__list__book-body__row-item w-14"
-                      onClick={() => updateCoverFile(item._id)}
-                    >
-                      <img src={item?.image} alt="" />
-                    </td>
-                    <td className="book__manage__wrapper__list__book-body__row-item">{item.tenKhoa}</td>
-                    <td className="book__manage__wrapper__list__book-body__row-item">{item.tenMonHoc}</td>
-                    <td className="book__manage__wrapper__list__book-body__row-item">{item.giaovien}</td>
-                    <td className="book__manage__wrapper__list__book-body__row-item">
-                      {!item.filePdf ? (
-                        <p
-                          className="border-[1px] border-solid border-[#ccc] shadow-sm text-center hover:bg-orange-700 transition-all hover:text-white"
-                          onClick={() => updateCoverFile(item._id)}
-                        >
-                          Thêm file
-                        </p>
-                      ) : (
-                        <a href={item.filePdf} target="_blank" rel="noopener noreferrer">
-                          <p className="border-[1px] border-solid border-[#ccc] shadow-sm text-center hover:bg-orange-700 transition-all hover:text-white ">
-                            Mở file
-                          </p>
-                        </a>
-                      )}
-                    </td>
-                    <td className="book__manage__wrapper__list__book-body__row-item">
-                      <button onClick={() => hanldeEdit(item)} className="btn-edit">
-                        <span>
-                          <AiOutlineEdit />
-                        </span>
-                      </button>
-                      <button
-                        onClick={() => {
-                          setType("delete")
-                          setVisible(true)
-                          setActionData(item._id)
-                        }}
-                        className="btn-delete"
-                      >
-                        <span>
-                          <AiOutlineDelete />
-                        </span>
-                      </button>
-                    </td>
-                  </tr>
-                ))
-                :
-                allFile?.map((item: any, index: number) => (
-                <tr key={index} className="book__manage__wrapper__list__book-body__row text-center">
-                  <td className="book__manage__wrapper__list__book-body__row-item">{index + 1}</td>
-                  <td
-                    className="book__manage__wrapper__list__book-body__row-item w-14"
-                    onClick={() => updateCoverFile(item._id)}
-                  >
-                    <img src={item?.image} alt="" />
-                  </td>
-                  <td className="book__manage__wrapper__list__book-body__row-item">{item.tenKhoa}</td>
-                  <td className="book__manage__wrapper__list__book-body__row-item">{item.tenMonHoc}</td>
-                  <td className="book__manage__wrapper__list__book-body__row-item">{item.giaovien}</td>
-                  <td className="book__manage__wrapper__list__book-body__row-item">
-                    {!item.filePdf ? (
-                      <p
-                        className="border-[1px] border-solid border-[#ccc] shadow-sm text-center hover:bg-orange-700 transition-all hover:text-white"
-                        onClick={() => updateCoverFile(item._id)}
-                      >
-                        Thêm file
-                      </p>
-                    ) : (
-                      <a href={item.filePdf} target="_blank" rel="noopener noreferrer">
-                        <p className="border-[1px] border-solid border-[#ccc] shadow-sm text-center hover:bg-orange-700 transition-all hover:text-white ">
-                          Mở file
-                        </p>
-                      </a>
-                    )}
-                  </td>
-                  <td className="book__manage__wrapper__list__book-body__row-item">
-                    <button onClick={() => hanldeEdit(item)} className="btn-edit">
-                      <span>
-                        <AiOutlineEdit />
-                      </span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setType("delete")
-                        setVisible(true)
-                        setActionData(item._id)
-                      }}
-                      className="btn-delete"
-                    >
-                      <span>
-                        <AiOutlineDelete />
-                      </span>
-                    </button>
-                  </td>
-                </tr>
-              ))
-              }
-              </tbody>
-            </table> */}
           </TabPanel>
         </Tabs>
       </div>

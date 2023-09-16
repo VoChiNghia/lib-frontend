@@ -11,6 +11,7 @@ import {
   updateCoveredBookByQuery,
   updateBook,
   updateCoveredBook,
+  getAllBook,
 } from "../../../redux/reducer/book";
 
 const validationSchema = Yup.object().shape({
@@ -29,12 +30,6 @@ const validationSchema = Yup.object().shape({
         (value && value.type === "image/png") ||
         (value && value.type === "image/jpg")
       );
-    }),
-  filePdf: Yup.mixed()
-    .nullable()
-    .test("fileType", "Only PNG files are allowed", (value: any) => {
-      if (!value) return true; // Allow empty values
-      return value && value.type === "application/pdf";
     }),
 });
 
@@ -105,6 +100,8 @@ const AddBook = (props: AddBookProps) => {
                 props.value
                   ? await updateBookApi(values)
                   : await createBookApi(values)
+
+                 await dispatch(getAllBook(''))
               }}
             >
               {({ values, errors, touched, dirty, handleSubmit, isValid }) => (
@@ -253,16 +250,6 @@ const AddBook = (props: AddBookProps) => {
                         />
                         <ErrorMessage
                           name="file"
-                          component="p"
-                          className="error"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <p>File pdf</p>
-                        <Field type="file" name="filePdf" />
-                        <ErrorMessage
-                          name="filePdf"
                           component="p"
                           className="error"
                         />

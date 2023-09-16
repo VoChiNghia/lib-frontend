@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./dashboard.scss";
 import { CiLogout } from "react-icons/ci";
 import { BsUiRadiosGrid, BsBook } from "react-icons/bs";
@@ -20,6 +20,10 @@ import {
   Title,
 } from "chart.js";
 import { Doughnut, Bar } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, RootState } from "../../../redux/store";
+import { getAllBook, getAllBookBorrowByMonth, getAllBorrowBook } from "../../../redux/reducer/book";
+import { getAllUser } from "../../../redux/reducer/user";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,18 +33,7 @@ ChartJS.register(
   Legend,
   ArcElement
 );
-const data = {
-  labels: ["Số sách mượn", "Số sách trả"],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [20, 19],
-      backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
-      borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
-      borderWidth: 1,
-    },
-  ],
-};
+
 const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -56,13 +49,18 @@ const options = {
 };
 
 const labelsForBarChart = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
+  "Tháng 1",
+  "Tháng 2",
+  "Tháng 3",
+  "Tháng 4",
+  "Tháng 5",
+  "Tháng 6",
+  "Tháng 7",
+  "Tháng 8",
+  "Tháng 9",
+  "Tháng 10",
+  "Tháng 11",
+  "Tháng 12",
 ];
 
 const dataForbarChart = {
@@ -70,7 +68,7 @@ const dataForbarChart = {
   datasets: [
     {
       label: "Tổng Số Sách",
-      data: labelsForBarChart.map(() => Math.random() * 1000),
+      data: labelsForBarChart.map((item,index) => Math.random() * 1000),
       backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
     {
@@ -82,6 +80,35 @@ const dataForbarChart = {
 };
 
 const Dashboard = () => {
+  const { totalBooks } = useSelector((state: RootState) => state.book)
+  const { user } = useSelector((state: RootState) => state.user);
+  const { getListBorrowBook,statisticalBorrow } = useSelector((state: RootState) => state.book)
+  const dispatch: DispatchType = useDispatch();
+  console.log(statisticalBorrow)
+  useEffect(() => {
+    dispatch(getAllBorrowBook())
+    dispatch(getAllBook(''))
+    dispatch(getAllUser());
+    dispatch(getAllBookBorrowByMonth());
+  }, [])
+
+  const codeCount = getListBorrowBook?.filter((obj: any) => obj.status === 'return').length;
+const studyCount = getListBorrowBook?.filter((obj: any) => obj.status === 'borrowed').length;
+
+console.log(codeCount,studyCount)
+
+  const data = {
+    labels: ["Số sách mượn", "Số sách trả"],
+    datasets: [
+      {
+        label: "# of Votes",
+        data: [studyCount, codeCount],
+        backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
+        borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
   return (
     <div className="dashboard">
       <div className="dashboard-container">
@@ -93,7 +120,7 @@ const Dashboard = () => {
             <h3>Tổng số sách</h3>
           </div>
           <p>
-            1,000{" "}
+          {totalBooks}{" "}
           </p>
           <div className="rate">
             <span>
@@ -109,13 +136,7 @@ const Dashboard = () => {
             </div>
             <h3>Tổng số người dùng</h3>
           </div>
-          <p>500</p>
-          <div className="rate red">
-            <span>
-              <PiArrowDownRightLight />
-            </span>{" "}
-            10%
-          </div>
+          <p>{user?.length}</p>
         </div>
         <div className="dashboard-container-item">
           <Doughnut data={data} />
@@ -125,10 +146,10 @@ const Dashboard = () => {
             <div>
               <BsBook />
             </div>
-            <h3>Tổng số sách mượn</h3>
+            <h3>sách mượn trả</h3>
           </div>
           <p>
-            3{" "}
+            {getListBorrowBook ? getListBorrowBook.length : '0'}{" "}
           </p>
           <div className="rate">
             <span>
@@ -146,3 +167,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

@@ -6,13 +6,13 @@ import { getAllBorrowBook, updateStatusBorrowBook } from "../../../redux/reducer
 import { useState } from "react";
 
 const FormApprove = ({id}: any) => {
-  const [selectedCity, setSelectedCity] = useState(null)
+  const [selectedCity, setSelectedCity] = useState<any>(null)
   const cities = [
-    { value: "Approve", name: "Chấp nhận" },
-    { value: "Due", name: "Quá hạn" },
-    { value: "Pending", name: "Đang chờ" },
-    { value: "Returned", name: "Đã trả" },
-    { value: "Borrowed", name: "Đã mượn" },
+    { value: "approve", name: "Chấp nhận" },
+    { value: "due", name: "Quá hạn" },
+    { value: "pending", name: "Đang chờ" },
+    { value: "return", name: "Đã trả" },
+    { value: "borrowed", name: "Đã mượn" },
 
   ]
   const dispatch:DispatchType = useDispatch()
@@ -21,8 +21,11 @@ const FormApprove = ({id}: any) => {
       id: id,
       status: selectedCity
     }
-   await dispatch(updateStatusBorrowBook(action))
-   await dispatch(getAllBorrowBook())
+    if(selectedCity){
+
+      await dispatch(updateStatusBorrowBook(action))
+      await dispatch(getAllBorrowBook())
+    }
   }
   return (
     <div className="col-12 md:col-4 w-56">

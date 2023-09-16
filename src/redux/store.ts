@@ -4,13 +4,15 @@ import modal from './reducer/modal'
 import book from './reducer/book'
 import category from './reducer/category'
 import user from './reducer/user'
+import toast from './reducer/toast'
 const store = configureStore({
     reducer:{
         authSlice,
         modal,
         book,
         category,
-        user
+        user,
+        toast
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

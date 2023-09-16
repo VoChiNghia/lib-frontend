@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Toast } from 'primereact/toast';
 
 const ToastComponent = () => {
@@ -7,7 +7,9 @@ const ToastComponent = () => {
     const showToast = (severity: any, summary: any, detail: any, life = 3000) => {
       toast.current.show({ severity, summary, detail, life });
     };
-  
+    useEffect(() => {
+      showToast('info','','')
+    },[])
   
 
 

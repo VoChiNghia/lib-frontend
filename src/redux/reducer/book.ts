@@ -21,6 +21,7 @@ const initialState: any = {
   fileDetail: null,
   listFavorite: null,
   listFavoriteByUser: null,
+  statisticalBorrow:null
 };
 const bookSlice = createSlice({
   name: "book",
@@ -57,8 +58,10 @@ getFileByIdReducer: (state, action) => {
   state.listFavorite = action.payload
 },
 getListFavoriteByUserReducer: (state, action) => {
-  console.log(action.payload)
   state.listFavoriteByUser = action.payload
+},
+getAllBorrowByMonthReducer: (state, action) => {
+  state.statisticalBorrow = action.payload
 }
   },
   extraReducers: (builder) => {
@@ -76,7 +79,7 @@ getListFavoriteByUserReducer: (state, action) => {
   },
 });
 
-export const {getBookReducer,getListFavoriteByUserReducer,getListFavoriteReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer,getAllPenaltyReducer,getFileByIdReducer} = bookSlice.actions;
+export const {getBookReducer,getListFavoriteByUserReducer,getAllBorrowByMonthReducer,getListFavoriteReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer,getAllPenaltyReducer,getFileByIdReducer} = bookSlice.actions;
 export default bookSlice.reducer;
 
 export const getAllBook = createAsyncThunk("book", async (query?: any) => {
@@ -163,6 +166,22 @@ export const updateCoveredFile = (id: string, fromdata: any) => {
     try {
       const respone: AxiosResponse = await http.put(
         `/api/file/cover-image/${id}`,
+        fromdata
+      );
+      toast.success(respone.data.message);
+      return respone.data.metadata;
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+export const updateFileBookPdf = (id: string, fromdata: any) => {
+  return async () => {
+    try {
+      const respone: AxiosResponse = await http.put(
+        `/api/book/file-pdf/${id}`,
         fromdata
       );
       toast.success(respone.data.message);
@@ -505,6 +524,21 @@ export const createFavoriteBook = (data:any) => {
         '/api/favorite',data
       );
       toast.success(respone.data.metadata.message);  
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+export const getAllBookBorrowByMonth = () => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.get(
+        '/api/borrow-statistical'
+      );
+
+       dispatch(getAllBorrowByMonthReducer(respone.data.metadata));
     } catch (e) {
       const errors = e as any;
       toast.error(errors?.response?.data?.message)

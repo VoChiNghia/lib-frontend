@@ -55,7 +55,7 @@ const ListBookBorrow = () => {
   const representativeBodyTemplate4 = (item: any) => {
     return (
       <div className="w-full">
-        <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel" onClick={() => hanldeEdit(item)}/>
+        {/* <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel" onClick={() => hanldeEdit(item)}/> */}
         <Button icon="pi pi-times" rounded text severity="danger" aria-label="Cancel" onClick={() => {
            dispatch(deleteBookBorrow(item._id))
           }} />
@@ -113,6 +113,7 @@ const ListBookBorrow = () => {
         <Column
           field="borrowedBook"
           body={representativeBodyTemplate}
+          sortable
           header="Trạng thái"
           style={{ width: "10%", fontSize: "13px" }}
         ></Column>

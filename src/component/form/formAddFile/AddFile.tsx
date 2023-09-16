@@ -13,6 +13,7 @@ import {
   updateCoveredBook,
   createFile,
   updateFile,
+  getAllFile,
 } from "../../../redux/reducer/book";
 
 const validationSchema = Yup.object().shape({
@@ -69,8 +70,9 @@ const AddFile = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={(values: any) => {
-                createBookApi(values)
+              onSubmit={async (values: any) => {
+              await  createBookApi(values)
+              await  dispatch(getAllFile())
               }}
             >
               {({ values, errors, touched, dirty, handleSubmit, isValid }) => (
