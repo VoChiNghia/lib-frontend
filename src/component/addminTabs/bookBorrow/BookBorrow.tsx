@@ -45,7 +45,6 @@ const BookBorrow = () => {
     dispatch(getAllBorrowBook())
     dispatch(getAllPenalty())
   }, [])
-  console.log(allPenalty)
   const hanldeEdit = (item: any) => {}
   const hanldeDelete = (id: any) => {
     dispatch(deleteBookBorrow(id))

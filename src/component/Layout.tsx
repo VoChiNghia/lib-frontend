@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import LoginForm from "../pages/loginForm/LoginForm"
 import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from "react-router-dom"
 import HomeAdmin from "../pages/homeAdmin/HomeAdmin"
@@ -21,12 +21,13 @@ import VerifyTocken from "../pages/verify/VerifyTocken"
 import ShowAllBook from "../pages/showAllBook/ShowAllBook"
 import ShowAllFile from "../pages/showAllFile/ShowAllFile"
 import Profile from "../pages/profile/Profile"
+import ListFavoriteBook from "../pages/listFavoriteBook/ListFavoriteBook"
+
 
 export const history = createBrowserHistory({ v5Compat: true })
 const Layout = () => {
   const {user} = useSelector((state: RootState) => state.authSlice)
   const [userRole, setUserRole] = useState<any>(JSON.parse(localStorage.getItem(USER) as string) ?? '');
-  console.log(userRole)
   useEffect(() => {
     const handleStorageChange = (e: any) => {
       if (e.key === USER) {
@@ -58,6 +59,7 @@ const Layout = () => {
         <Route index path="/blog/:id" element={<BlogDetail/>}></Route>
         <Route index path="/file/:id" element={<BlogDetail/>}></Route>
         <Route index path="/profile" element={<Profile/>}></Route>
+        <Route index path="/list-book-favorite/:id" element={<ListFavoriteBook/>}></Route>
         <Route index path="/auth/:token" element={<VerifyTocken/>}></Route>
         <Route index path="/admin" element={userRole?.role || user?.role === "admin" ? <HomeAdmin /> :   <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/" element={userRole?.role || user?.role === "user" ? <Home /> : <Navigate to="/login-form" replace={true} />}></Route>

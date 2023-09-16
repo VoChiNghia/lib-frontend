@@ -1,5 +1,5 @@
 import React from 'react'
-import './header.scss'
+import './headerAdmin.scss'
 import {BsBell} from 'react-icons/bs'
 import { CiLogout } from 'react-icons/ci'
 import { TOKEN, USER } from '../../config/axios'

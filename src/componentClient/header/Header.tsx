@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import "./header.scss"
+import "./index.scss"
 import Search from "../../component/search/Search"
 import ButtonSolid from "../../component/button/ButtonSolid"
 import { Link } from "react-router-dom"
@@ -69,23 +69,23 @@ const Header = () => {
   }, []);
 
   return (
-    <div className={`header w-[1280px] ${scrolling ? 'fixed-header' : ''}`}>
-      <div className="header__left">
-        <div className="header__left__logo">
+    <div className={`headerClient w-[1280px] ${scrolling ? 'fixed-header' : ''}`}>
+      <div className="headerClient__left">
+        <div className="headerClient__left__logo">
           <Link to="/"><img src={logo} alt="" /></Link>
-          <div className="header__left__logo-info">
+          <div className="headerClient__left__logo-info">
             <p>Hệ thống thư viện trường</p>
             <h2>Cao đẳng công nghệ cao đồng an</h2>
           </div>
         </div>
       </div>
 
-      <div className="header__center">
+      <div className="headerClient__center">
         <Search />
       </div>
-      <div className="header__right">
+      <div className="headerClient__right">
         {user ? (
-          <div className="header__right-btn ">
+          <div className="headerClient__right-btn ">
             <div className="flex items-center">
               <p className="font-bold mx-2"> Xin Chào: {user?.name}</p>
               <p><Button icon="pi pi-bell" rounded text severity="warning" aria-label="Notification" /></p>
@@ -99,10 +99,10 @@ const Header = () => {
                 </span>
               </p>
                 {isOpen && (
-                  <div className="absolute mt-2 bg-white shadow-lg rounded z-20 w-64 drop-shadow">
+                  <div className="absolute right-[100%] mt-2 bg-white shadow-lg rounded z-20 w-64 drop-shadow">
                     <ul className="py-1">
                       <Link to={`/list-book-borrow/${user._id}`}><li className="px-4 py-2 hover:bg-gray-100">Danh sách sách đăng kí mượn</li></Link>
-                      <li className="px-4 py-2 hover:bg-gray-100">Danh sách yêu thích</li>
+                      <Link to={`/list-book-favorite/${user._id}`}><li className="px-4 py-2 hover:bg-gray-100">Danh sách yêu thích</li></Link>
                       <li className="px-4 py-2 hover:bg-gray-100" onClick={handleLogout}>Đăng xuất</li>
                     </ul>
                   </div>
@@ -111,7 +111,7 @@ const Header = () => {
             </div>
           </div>
         ) : (
-          <div className="header__right-btn">
+          <div className="headerClient__right-btn">
             <Link to="/login">
               <div>
                 <ButtonSolid text="Đăng nhập" onSubmit={() => {}} />

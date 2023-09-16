@@ -18,7 +18,9 @@ const initialState: any = {
   blogDetail: null,
   allFile: null,
   allPenalty: null,
-  fileDetail: null
+  fileDetail: null,
+  listFavorite: null,
+  listFavoriteByUser: null,
 };
 const bookSlice = createSlice({
   name: "book",
@@ -51,6 +53,12 @@ getAllPenaltyReducer: (state, action) => {
 },
 getFileByIdReducer: (state, action) => {
   state.fileDetail = action.payload
+},getListFavoriteReducer: (state, action) => {
+  state.listFavorite = action.payload
+},
+getListFavoriteByUserReducer: (state, action) => {
+  console.log(action.payload)
+  state.listFavoriteByUser = action.payload
 }
   },
   extraReducers: (builder) => {
@@ -68,7 +76,7 @@ getFileByIdReducer: (state, action) => {
   },
 });
 
-export const {getBookReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer,getAllPenaltyReducer,getFileByIdReducer} = bookSlice.actions;
+export const {getBookReducer,getListFavoriteByUserReducer,getListFavoriteReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer,getAllPenaltyReducer,getFileByIdReducer} = bookSlice.actions;
 export default bookSlice.reducer;
 
 export const getAllBook = createAsyncThunk("book", async (query?: any) => {
@@ -412,6 +420,68 @@ export const getAllPenalty = () => {
   };
 };
 
+export const getAllListFavorite = () => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.get(
+        '/api/favorite'
+      );
+
+       dispatch(getListFavoriteReducer(respone.data))
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+export const getAllListFavoriteByUser = (id: any) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.get(
+        `/api/favorite-user/${id}`
+      );
+      console.log(respone.data);
+       dispatch(getListFavoriteByUserReducer(respone.data))
+       
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+export const deleteItemFromListBooks = (data: any) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.post(
+        `/api/favorite/delete-item-list-book`,data
+      );
+      toast.success(respone.status === 200 ? "Đã xóa" : '');
+       
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+
+export const deleteFavorite = (id: any) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.get(
+        `/api/favorite/${id}`
+      );
+      toast.success(respone.status === 200 ? "Đã xóa" : '');
+       
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
 
 export const createPenalty = (data: any) => {
   return async () => {
@@ -421,6 +491,20 @@ export const createPenalty = (data: any) => {
       );
       toast.success(respone.data.message);
       return respone
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
+export const createFavoriteBook = (data:any) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.post(
+        '/api/favorite',data
+      );
+      toast.success(respone.data.metadata.message);  
     } catch (e) {
       const errors = e as any;
       toast.error(errors?.response?.data?.message)

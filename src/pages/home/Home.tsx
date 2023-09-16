@@ -26,7 +26,6 @@ const Home = () => {
   useEffect(() => {
     getAllBookApi()
   }, [])
-console.log(book)
   const [products, setProducts] = useState([
     {
       title: "Nhớ rằng đôi khi không quan trọng nơi bạn đang đi, chỉ là bạn đang đi cùng ai.",

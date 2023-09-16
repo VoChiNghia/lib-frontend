@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import book, { getBookById } from "../../redux/reducer/book"
+import book, { createFavoriteBook, getBookById } from "../../redux/reducer/book"
 import { DispatchType, RootState } from "../../redux/store"
 import { AiTwotoneLike } from "react-icons/ai"
 import { IoIosShareAlt } from "react-icons/io"
@@ -10,8 +10,13 @@ import Header from "../../componentClient/header/Header"
 import Loading from "../../component/loading/Loading"
 import { changeComponent, setIsOpenCompoent } from "../../redux/reducer/modal"
 import FormBorrowBook from "../../componentClient/formBorrowBook/FormBorrowBook"
+import { Toast } from 'primereact/toast';
+import { Button } from "primereact/button"
+import { USER } from "../../config/axios"
 
 const DetailBook = () => {
+  const toast = useRef<any>(null);
+  const [user, setUser] = useState<any>(JSON.parse(localStorage.getItem(USER) as string) ?? '');
   const { bookDetail,loading } = useSelector((state: RootState) => state.book)
   const { id } = useParams()
   const dispatch: DispatchType = useDispatch()
@@ -26,8 +31,23 @@ const DetailBook = () => {
     dispatch(setIsOpenCompoent(true))
   }
 
+  const showWarn = () => {
+    toast.current.show({severity:'warn', summary: 'Thông báo', detail:'Không Tìm thấy file pdf', life: 3000});
+}
+
+const handleBookMark = () => {
+  const data = {
+    userId:user._id,
+    bookId: id,
+  }
+  if(!user._id) toast.current.show({severity:'warn', summary: 'Thông báo', detail:'Có lỗi xãy ra', life: 3000});
+  dispatch(createFavoriteBook(data))
+  
+}
+
   return (
     <div className="w-[1200px] mx-auto">
+      <Toast ref={toast} />
       <div>
         <Header/>
       </div>
@@ -54,6 +74,13 @@ const DetailBook = () => {
                 </span>{" "}
                 chia se
               </p>
+
+              <p className="flex items-cente text-white w-20 px-2 rounded cursor-pointer mx-2">
+                <span>
+                
+                <i className="pi pi-bookmark-fill text-xl" style={{ color: 'yellow' }}></i>
+                </span>{" "}
+              </p>
             </div>
           </div>
           <div className="my-4">
@@ -66,13 +93,16 @@ const DetailBook = () => {
 
           <div className="flex">
             <div>
-            <ButtonSolid text='Mượn' onSubmit={openFormBorrow}/>
+            <Button label="Mượn" severity="success" raised onSubmit={openFormBorrow}/>
             </div>
            <div className="mx-2">
-              <a href={bookDetail?.format[0]?.linkPdf} target="_blank">
-              <ButtonSolid outline={true} text='Tải bản pdf' onSubmit={() => {}}/>
+              <a href={bookDetail?.format[0]?.linkPdf? bookDetail?.format[0]?.linkPdf: null} onClick={bookDetail?.format[0]?.linkPdf ?? showWarn} target="_blank">
+              <Button label="Primary" outlined/>
               </a>
           
+           </div>
+           <div>
+           <Button label="Đánh đấu yêu thích" severity="info" outlined onClick={handleBookMark}/>
            </div>
           </div>
         </div>
