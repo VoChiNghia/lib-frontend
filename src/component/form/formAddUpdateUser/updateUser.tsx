@@ -12,7 +12,8 @@ import {
   updateBook,
   updateCoveredBook,
 } from "../../../redux/reducer/book";
-import { updateUser } from "../../../redux/reducer/user";
+import { getAllUser, updateUser } from "../../../redux/reducer/user";
+import { Button } from "primereact/button";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -28,33 +29,7 @@ interface AddBookProps {
 }
 
 const UpdateUser = (props: AddBookProps) => {
-  const [formDataImage, setFormDataImage] = useState<FormData>();
   const dispatch: DispatchType = useDispatch();
-  const year = new Date().getFullYear();
-  const years = Array.from(new Array(40), (val, index) => year - index);
-  const { category } = useSelector((state: RootState) => state.category);
-
-  const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
-    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
-      const fromData = new FormData();
-      fromData.append("image", file);
-      setFormDataImage(fromData);
-    }
-  };
-
-  const updateBookApi = async (values: UserType) => {
-    await dispatch(updateBook(props.value._id, values));
-    if (formDataImage)
-      await dispatch(updateCoveredBook(props.value._id, formDataImage));
-  };
-
-  const createBookApi = async (values: UserType) => {
-   // await dispatch(createBook(values));
-    if (formDataImage)
-      await dispatch(updateCoveredBookByQuery(formDataImage, values));
-  };
-
   const initialValues: UserType = {
         name: props.value.name,
         email: props.value.email,
@@ -67,13 +42,14 @@ const UpdateUser = (props: AddBookProps) => {
       <div className="add-book__wrapper">
         <div className="add-book">
           <div className="add-book__body">
-            <h1 className="font-bold">Cập nhập thông tin người dùng</h1>
+            <h1 className="font-bold">{props?.value?._id ? 'Cập nhập người dùng' : 'Thêm mới người dùng'}</h1>
 
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={async (values: UserType) => {
-                dispatch(updateUser(props.value._id,values));
+               await dispatch(updateUser(props.value._id,values));
+                await dispatch(getAllUser());
               }}
             >
               {({ values, errors, touched, dirty, handleSubmit, isValid }) => (
@@ -157,11 +133,7 @@ const UpdateUser = (props: AddBookProps) => {
                   </div>
 
                   <div className="form-bottom">
-                    <ButtonSolid
-                      text="Cập nhập"
-                      onSubmit={handleSubmit}
-                      hover={false}
-                    />
+                    <Button label={props?.value?._id ? 'Cập nhập' : 'Thêm mới'} raised onSubmit={() => handleSubmit()}/>
                   </div>
                 </Form>
               )}

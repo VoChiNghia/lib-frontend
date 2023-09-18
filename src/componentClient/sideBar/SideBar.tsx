@@ -2,40 +2,24 @@ import React, { useState } from "react"
 import { BiBookOpen } from "react-icons/bi"
 import { Link } from "react-router-dom"
 import { Tree } from 'primereact/tree';
+import { changeComponent, setIsOpenCompoent } from "../../redux/reducer/modal";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, RootState } from "../../redux/store";
+import RequestBook from "../../component/form/formAddRequestBook/FormAddRequestBook";
 const SideBar = () => {
   const [selectedKey, setSelectedKey] = useState('');
-  const itemData = [
-    {
-      key: '0',
-      label: 'Book',
-      data: 'Documents Folder',
-      icon: 'pi pi-fw pi-inbox',
-      children: [
-          {
-              key: '0-0',
-              label: 'Work',
-              data: 'Work Folder',
-              icon: 'pi pi-fw pi-cog',
-              children: [
-                  { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file', data: 'Expenses Document' },
-                  { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', data: 'Resume Document' }
-              ]
-          },
-          {
-              key: '0-1',
-              label: 'Home',
-              data: 'Home Folder',
-              icon: 'pi pi-fw pi-home',
-              children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-fw pi-file', data: 'Invoices for this month' }]
-          }
-      ]
+  const dispatch: DispatchType = useDispatch()
+  const { requestBook } = useSelector((state: RootState) => state.requestBook)
+  
+  const handleRequestBook = () => {
+    dispatch(changeComponent(<RequestBook />))
+    dispatch(setIsOpenCompoent(true))
   }
-  ]
 
-  console.log(selectedKey)
+
   return (
     <div>
-      <h1 className="bg-[#FF9138] text-white p-2 font-bold">Category</h1>
+      <h1 className="bg-[#FF9138] text-white p-2 font-bold">Danh mục</h1>
       <ul className="mt-4">
       <Link to='/'>
         <li className="mt-2 border-b-[1px] my-4 border-[#ccc] border-solid py-2 px-1 hover:bg-gray-100 transition-all flex align-center">
@@ -71,6 +55,12 @@ const SideBar = () => {
           <p className="leading-3 font-bold mx-2 cursor-pointer">Hồ sơ</p>
         </li>
         </Link>
+        <li className="mt-2 border-b-[1px] my-4 border-[#ccc] border-solid py-2 px-1 hover:bg-gray-100 transition-all flex align-center" onClick={handleRequestBook}>
+        <span>
+            <BiBookOpen className="text-[#FF9138]"/>
+          </span>{" "}
+          <p className="leading-3 font-bold mx-2 cursor-pointer">Yêu cầu sách mới</p>
+        </li>
       </ul>
 
       {/* <Tree value={itemData} selectionMode="single" selectionKeys={selectedKey} 

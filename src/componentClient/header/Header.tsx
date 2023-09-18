@@ -7,12 +7,16 @@ import { USER } from "../../config/axios"
 import { AiOutlineMenu } from "react-icons/ai"
 import { history } from "../../component/Layout"
 import { Button } from "primereact/button"
+import { changeComponent, setIsOpenCompoent } from "../../redux/reducer/modal"
+import { DispatchType } from "../../redux/store"
+import { useDispatch } from "react-redux"
+import ChangePassword from "../../component/form/formChangePass/ChangePass"
 const logo = require("../../assets/images/icon-3.webp")
 const Header = () => {
   const [user, setUser] = useState<any>(null)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null);
-  
+  const dispatch: DispatchType = useDispatch()
   function useClickOutside(ref: React.RefObject<HTMLElement>, callback: () => void) {
     const handleClick = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -68,6 +72,11 @@ const Header = () => {
     };
   }, []);
 
+  const handleChangePass = () => {
+    dispatch(changeComponent(<ChangePassword />))
+    dispatch(setIsOpenCompoent(true))
+  }
+
   return (
     <div className={`headerClient w-[1280px] ${scrolling ? 'fixed-header' : ''}`}>
       <div className="headerClient__left">
@@ -99,10 +108,11 @@ const Header = () => {
                 </span>
               </p>
                 {isOpen && (
-                  <div className="absolute right-[100%] mt-2 bg-white shadow-lg rounded z-20 w-64 drop-shadow">
+                  <div className="absolute right-[-100%] mt-2 z-20 bg-white shadow-lg rounded w-64 drop-shadow">
                     <ul className="py-1">
                       <Link to={`/list-book-borrow/${user._id}`}><li className="px-4 py-2 hover:bg-gray-100">Danh sách sách đăng kí mượn</li></Link>
                       <Link to={`/list-book-favorite/${user._id}`}><li className="px-4 py-2 hover:bg-gray-100">Danh sách yêu thích</li></Link>
+                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleChangePass}>Đổi mật khẩu</li>
                       <li className="px-4 py-2 hover:bg-gray-100" onClick={handleLogout}>Đăng xuất</li>
                     </ul>
                   </div>

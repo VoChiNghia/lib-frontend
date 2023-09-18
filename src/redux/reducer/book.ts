@@ -128,6 +128,21 @@ export const deleteBook = (id: string) => {
   };
 };
 
+export const deleteBlog = (id: string) => {
+  return async () => {
+    try {
+      const respone: AxiosResponse = await http.delete(
+        `/api/blog/${id}`
+      );
+      toast.success(respone.data.message);
+      return respone.data.metadata;
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
 export const deleteFile = (id: string) => {
   return async () => {
     try {

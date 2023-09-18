@@ -104,6 +104,22 @@ export const updateUser = (id: string, body: any) => {
   };
 };
 
+export const updatePassword = (body: any) => {
+  return async () => {
+    try {
+      const respone: AxiosResponse = await http.put(
+        `/api/user/password`,
+        body
+      );
+      toast.success(respone.data.message);
+      return respone.data.metadata;
+    } catch (e) {
+      const errors = e as any;
+      toast.error(errors?.response?.data?.message)
+    }
+  };
+};
+
 export const updateCoveredBookByQuery = (fromdata: any, query: any) => {
   return async () => {
     try {

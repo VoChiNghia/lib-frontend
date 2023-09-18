@@ -5,12 +5,16 @@ import book from './reducer/book'
 import category from './reducer/category'
 import user from './reducer/user'
 import toast from './reducer/toast'
+import compoentGlobal from './reducer/compoentGlobal'
+import requestBook from './reducer/requestBook'
 const store = configureStore({
     reducer:{
         authSlice,
         modal,
+        compoentGlobal,
         book,
         category,
+        requestBook,
         user,
         toast
     },

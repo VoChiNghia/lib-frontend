@@ -25,8 +25,8 @@ const ListBookBorrow = () => {
 
   const hanldeEdit = (item: any) => {}
   const hanldeDelete = async (id: any) => {
-  await dispatch(deleteBookBorrow(id))
-  await dispatch(getAllBorrowBook())
+    await dispatch(deleteBookBorrow(id))
+    await dispatch(getAllBorrowBook())
   }
   const handleSubmit = () => {}
 
@@ -45,6 +45,10 @@ const ListBookBorrow = () => {
           <p className="bg-red-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
         ) : item?.status === "approved" ? (
           <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        ) : item?.status === "return" ? (
+          <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        ) : item?.status === "borrowed" ? (
+          <p className="bg-blue-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
         ) : (
           <p className="bg-yellow-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
         )}
@@ -56,12 +60,23 @@ const ListBookBorrow = () => {
     return (
       <div className="w-full">
         {/* <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel" onClick={() => hanldeEdit(item)}/> */}
-        <Button icon="pi pi-times" rounded text severity="danger" aria-label="Cancel" onClick={() => {
-           dispatch(deleteBookBorrow(item._id))
-          }} />
+        {item.status === "pending" ? (
+          <Button
+            icon="pi pi-times"
+            rounded
+            text
+            severity="danger"
+            aria-label="Cancel"
+            onClick={() => {
+              dispatch(deleteBookBorrow(item._id))
+              dispatch(getAllBorrowBook())
+            }}
+          />
+        ) : null}
       </div>
     )
   }
+
   return (
     <div className="w-[1200px] mx-auto">
       <div>
@@ -75,56 +90,61 @@ const ListBookBorrow = () => {
         </TabList>
 
         <TabPanel>
-        <DataTable
-        scrollable
-        value={getListBorrowBook}
-        paginator
-        rows={4}
-        rowsPerPageOptions={[4, 5, 10, 25, 50]}
-        tableStyle={{ minWidth: "50rem" }}
-      >
-        {/* <Column field="image" body={representativeBodyTemplate2} header="Hình ảnh" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column> */}
-        <Column field="userId.name" header="Tên" filter sortable style={{ width: "15%", fontSize: "13px" }}></Column>
-        <Column
-          field="bookId.name"
-          header="Tên Sách"
-          filter
-          sortable
-          style={{ width: "25%", fontSize: "13px" }}
-        ></Column>
-        <Column
-          field="borrowedDate"
-          header="Ngày mượn"
-          body={dateBodyTemplate}
-          filter
-          sortable
-          filterField="date"
-          dataType="date"
-          style={{ width: "15%", fontSize: "13px" }}
-        ></Column>
-        <Column
-          field="returnDate"
-          header="Ngày trả"
-          body={dateBodyTemplate2}
-          filter
-          sortable
-          style={{ width: "15%", fontSize: "13px" }}
-        ></Column>
-        <Column
-          field="borrowedBook"
-          body={representativeBodyTemplate}
-          sortable
-          header="Trạng thái"
-          style={{ width: "10%", fontSize: "13px" }}
-        ></Column>
-        <Column
-          field=""
-          body={representativeBodyTemplate4}
-          header="Actions"
-          style={{ width: "25%", fontSize: "13px" }}
-        ></Column>
-        
-      </DataTable>
+          <DataTable
+            scrollable
+            value={getListBorrowBook}
+            paginator
+            rows={4}
+            rowsPerPageOptions={[4, 5, 10, 25, 50]}
+            tableStyle={{ minWidth: "50rem" }}
+          >
+            {/* <Column field="image" body={representativeBodyTemplate2} header="Hình ảnh" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column> */}
+            <Column
+              field="userId.name"
+              header="Tên"
+              filter
+              sortable
+              style={{ width: "15%", fontSize: "13px" }}
+            ></Column>
+            <Column
+              field="bookId.name"
+              header="Tên Sách"
+              filter
+              sortable
+              style={{ width: "25%", fontSize: "13px" }}
+            ></Column>
+            <Column
+              field="borrowedDate"
+              header="Ngày mượn"
+              body={dateBodyTemplate}
+              filter
+              sortable
+              filterField="date"
+              dataType="date"
+              style={{ width: "15%", fontSize: "13px" }}
+            ></Column>
+            <Column
+              field="returnDate"
+              header="Ngày trả"
+              body={dateBodyTemplate2}
+              filter
+              sortable
+              style={{ width: "15%", fontSize: "13px" }}
+            ></Column>
+            <Column
+              field="borrowedBook"
+              body={representativeBodyTemplate}
+              sortable
+              header="Trạng thái"
+              style={{ width: "10%", fontSize: "13px" }}
+            ></Column>
+            <Column
+              field=""
+              body={representativeBodyTemplate4}
+              header="Actions"
+              style={{ width: "25%", fontSize: "13px" }}
+            ></Column>
+          </DataTable>
         </TabPanel>
         <TabPanel>
           {!historyBorrow ? (

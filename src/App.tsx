@@ -24,7 +24,6 @@ function App() {
         rtl={false}
         theme="light"
       />
-      <ToastComponent/>
 
     </>
   )

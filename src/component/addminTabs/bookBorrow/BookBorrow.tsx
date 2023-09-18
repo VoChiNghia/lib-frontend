@@ -31,6 +31,7 @@ import { Button } from "primereact/button"
 import FormPenalty from "../../form/formPenalty/FormApprove"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import FormApprove from "../../form/formAprove/FormApprove"
+import { deleteRequestBook, getAllRequest } from "../../../redux/reducer/requestBook"
 const BookBorrow = () => {
   const toast = useRef<any>(null)
   const [visible, setVisible] = useState<boolean>(false)
@@ -38,17 +39,20 @@ const BookBorrow = () => {
   const [actionData, setActionData] = useState(null)
 
   const { getListBorrowBook,allPenalty } = useSelector((state: RootState) => state.book)
+  const { requestBook } = useSelector((state: RootState) => state.requestBook)
 
   const dispatch: DispatchType = useDispatch()
 
   useEffect(() => {
     dispatch(getAllBorrowBook())
     dispatch(getAllPenalty())
+    dispatch(getAllRequest())
   }, [])
   const hanldeEdit = (item: any) => {}
   const hanldeDelete = (id: any) => {
     dispatch(deleteBookBorrow(id))
     dispatch(getAllBorrowBook())
+   
    
   }
   const handleSubmit = () => {}
@@ -88,6 +92,26 @@ const BookBorrow = () => {
        
         
         }
+      </div>
+    )
+  }
+  
+  const representativeBodyTemplateRequest = (item: any) => {
+    return (
+      <div className="w-full">
+        {/* <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel" onClick={() => hanldeEdit(item)}/> */}
+
+          <Button
+            icon="pi pi-times"
+            rounded
+            text
+            severity="danger"
+            aria-label="Cancel"
+            onClick={() => {
+              dispatch(deleteRequestBook(item._id))
+              dispatch(getAllRequest())
+            }}
+          />
       </div>
     )
   }
@@ -142,6 +166,7 @@ const BookBorrow = () => {
     <TabList>
       <Tab>Sách mượn</Tab>
       <Tab>Phiếu phạt</Tab>
+      <Tab>Danh sách yêu cầu</Tab>
     </TabList>
 
     <TabPanel>
@@ -207,6 +232,19 @@ const BookBorrow = () => {
     <Column field="userId.name" header="Tên người dung" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
     <Column field="reason" header="Lý do" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
     <Column field="requireRecover" header="Hình thức xử lý"filter sortable  style={{ width: '10%',fontSize:'13px' }}></Column>
+</DataTable>
+    </TabPanel>
+    <TabPanel>
+    <DataTable scrollable  value={requestBook} paginator rows={4} rowsPerPageOptions={[4,5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+    <Column field="name" header="Tên Sách" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column field="author" header="Tác giả" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column field="description" header="Mô tả" filter sortable  style={{ width: '25%',fontSize:'13px' }}></Column>
+    <Column
+              field=""
+              body={representativeBodyTemplateRequest}
+              header="Actions"
+              style={{ width: "25%", fontSize: "13px" }}
+            ></Column>
 </DataTable>
     </TabPanel>
   </Tabs>

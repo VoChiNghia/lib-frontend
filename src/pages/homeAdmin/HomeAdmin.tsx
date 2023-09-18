@@ -18,6 +18,8 @@ import UserManage from "../../component/addminTabs/userManage/UserManage";
 import AddBlog from "../../component/form/wyswyg/AddBlog";
 import FormAddBlog from "../../component/form/formAddBlog/FormAddBlog";
 import BookBorrow from "../../component/addminTabs/bookBorrow/BookBorrow";
+import { changeComponent } from "../../redux/reducer/compoentGlobal";
+import BlogManage from "../../component/addminTabs/blogManage/BlogManage";
 const logo1 = require("../../assets/images/icon-3.webp");
 
 interface StrategyType {
@@ -31,15 +33,17 @@ const strategy: StrategyType = {
   dashboard: <Dashboard />,
   bookManage: <BookManage />,
   userManage: <UserManage />,
-  createBlog: <FormAddBlog />,
+  createBlog: <BlogManage />,
   bookBorrow:<BookBorrow/>
 } 
 
 const HomeAdmin = () => {
   const login = localStorage.getItem(USER)
   const [isPending, startTransition] = useTransition();
+  const { component } = useSelector((state: RootState) => state.compoentGlobal)
+
   
-  const [component, setcomponent] = useState<JSX.Element>(strategy.dashboard)
+  // const [component, setcomponent] = useState<JSX.Element>(strategy.dashboard)
 
   const ref = useRef<any[]>([]);
 
@@ -50,8 +54,8 @@ const HomeAdmin = () => {
   const handleClickItem = (e: any, type: any) => {
     ref.current.forEach((el: any) => el?.classList?.remove("active"));
     e?.currentTarget?.classList?.add("active");
-    startTransition(() => setcomponent(strategy[type as keyof  StrategyType]))
-    
+    dispatch(changeComponent(strategy[type as keyof  StrategyType]))
+
   };
 
   return (

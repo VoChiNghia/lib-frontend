@@ -34,7 +34,6 @@ const authSlice = createSlice({
         state.user = action.payload.user
         state.login = user
         state.loading = false;
-        console.log(123)
 
         if(user?.role === 'user') {
           history.push('/')

@@ -44,13 +44,14 @@ const UserManage = () => {
     getAllUserApi();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
-
-  const hanldeEdit = (item: any) => {
-    dispatch(changeComponent(<UpdateUser value={item} />));
+  const hanldeEdit = (item: any = '') => {
+    console.log('fcedit')
+    dispatch(changeComponent(<UpdateUser value={item}  />));
     dispatch(setIsOpenCompoent(true));
   };
   const hanldeDelete = (id: any) => {
     dispatch(deleteUser(id))
+    getAllUserApi();
   };
 
   const accept = async () => {
@@ -63,7 +64,7 @@ const UserManage = () => {
   const representativeBodyTemplate = (rowData: any) => {
     return (
         <div className="flex align-items-center gap-2">
-            
+             
             <button onClick={() => hanldeEdit(rowData)} className="btn-edit">
                     <span>
                       <AiOutlineEdit />
@@ -90,7 +91,10 @@ const UserManage = () => {
     <div className="book__manage">
       <div className="flex justify-between">
       <h1 className="font-bold">Danh sách hiện có</h1>
-      <Button className="mx-4 my-2" label="Export" icon='pi pi-file-excel' severity="info" onClick={() => exportToExcel(user)} rounded />
+     <div className="flex items-center">
+     <Button label="Thêm người dùng" icon='pi pi-plus' className="mx-2" raised  onClick={() => hanldeEdit()}/>
+      <Button className="mx-4 my-2" label="Export" icon='pi pi-file-excel' severity="info" onClick={() => exportToExcel(user)} raised />
+     </div>
       </div>
       <div className="book__manage__wrapper">
       <DataTable value={user} scrollable  paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>

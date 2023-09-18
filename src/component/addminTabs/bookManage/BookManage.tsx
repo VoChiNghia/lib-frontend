@@ -36,7 +36,7 @@ const BookManage = () => {
   const [selectedCity, setSelectedCity] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
 
-  const [summary, ...other] = book
+  const [image,summary,format, ...other] = book
   const query = {
     // limit: LIMIT,
     // page: currentPage,

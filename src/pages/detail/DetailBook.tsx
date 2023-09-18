@@ -16,6 +16,7 @@ import { USER } from "../../config/axios"
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from "react-share"
 import { FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa"
 import BookTicket from "../../componentClient/bookTicket/BookTicket"
+import Footer from "../../componentClient/footer/Footer"
 
 const DetailBook = () => {
   const toast = useRef<any>(null)
@@ -65,7 +66,8 @@ const DetailBook = () => {
   }, [book])
 
   return (
-    <div className="w-[1200px] mx-auto">
+    <div>
+      <div className="w-[1200px] mx-auto">
       <Toast ref={toast} />
       <div>
         <Header />
@@ -146,6 +148,9 @@ const DetailBook = () => {
           ))}
         </div>
       </div>
+     
+    </div>
+     <Footer/>
     </div>
   )
 }

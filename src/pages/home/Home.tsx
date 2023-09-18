@@ -14,6 +14,7 @@ import { getAllCategory } from "../../redux/reducer/category"
 import { Link } from "react-router-dom"
 import { Button } from "primereact/button"
 import { Carousel } from "primereact/carousel"
+import Footer from "../../componentClient/footer/Footer"
 const Home = () => {
   const dispatch: DispatchType = useDispatch()
   const { book, totalBooks, allBlog, allFile } = useSelector((state: RootState) => state.book)
@@ -150,7 +151,10 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+      
       </div>
+      <Footer/>
     </div>
   )
 }

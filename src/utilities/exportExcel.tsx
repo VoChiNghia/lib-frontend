@@ -6,30 +6,12 @@ import AddBook from "../component/form/formAddBook/AddBook";
 import { useDispatch } from "react-redux";
 import { DispatchType } from "../redux/store";
 import AddFile from "../component/form/formAddFile/AddFile";
+import { Button } from "primereact/button";
 
 
 const ExportToExcel = ({dataList}: any) => {
 
   const dispatch: DispatchType = useDispatch()
-
-  const items = [
-    {
-      label: 'Thêm tài liệu',
-        icon: 'pi pi-plus',
-        command: () => {
-          dispatch(changeComponent(<AddFile />))
-          dispatch(setIsOpenCompoent(true))
-        }
-    },
-    {
-      label: 'Export',
-      icon: 'pi pi-file-excel',
-      command: () => {
-        
-        exportToExcel(dataList);
-      }
-    },
-  ];
 
   const exportToExcel = (data: any) => {
     let sheetName = `export-book.xlsx`;
@@ -122,6 +104,9 @@ const ExportToExcel = ({dataList}: any) => {
         };
       }
     }
+    sheet.eachRow((row, rowNumber) => {
+      row.height = 50;
+    });
     table.commit();
 
     const writeFile = (fileName: any, content: any) => {
@@ -140,12 +125,34 @@ const ExportToExcel = ({dataList}: any) => {
     });
   };
 
-  const exportBtn = () => {
+  const AddBookBtn = () => {
     dispatch(changeComponent(<AddBook />))
           dispatch(setIsOpenCompoent(true))
     
 };
-
+const AddFileBtn = () => {
+  dispatch(changeComponent(<AddFile />))
+        dispatch(setIsOpenCompoent(true))
+  
+};
+const items = [
+  {
+    label: 'Thêm tài liệu',
+      icon: 'pi pi-plus',
+      command: () => {
+        dispatch(changeComponent(<AddFile />))
+        dispatch(setIsOpenCompoent(true))
+      }
+  },
+  {
+    label: 'Export',
+    icon: 'pi pi-file-excel',
+    command: () => {
+      
+      exportToExcel(dataList);
+    }
+  },
+];
 
   return (
     // <button
@@ -155,8 +162,10 @@ const ExportToExcel = ({dataList}: any) => {
     // >
     //   Export to Excel
     // </button>
-   <div className="bg-blue-500">
-     <SplitButton label="Thêm sách" icon="pi pi-plus" onClick={exportBtn} model={items} />
+   <div className="">
+     <Button label="Thêm sách" icon='pi pi-plus' className="mx-2" raised  onClick={AddBookBtn}/>
+     <Button label="Thêm Tài liệu" icon='pi pi-plus' className="mx-2" text raised  onClick={AddFileBtn}/>
+     <Button label="Xuất excel" icon='pi pi-file-excel' className="mx-2" text raised onClick={() => exportToExcel(dataList)}/>
    </div>
     
   );

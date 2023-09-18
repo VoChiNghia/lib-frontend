@@ -1,0 +1,1 @@
+.pagination{margin:10px;width:100%}.pagination__list{display:flex;justify-content:center;align-items:center}.pagination__list__item{line-height:10px;color:#333;padding:8px 12px;border-radius:5px}.pagination__list__item.active{background-color:#fff2e7}.pagination__list__item:hover{background-color:#fff2e7;color:#ff9138}
