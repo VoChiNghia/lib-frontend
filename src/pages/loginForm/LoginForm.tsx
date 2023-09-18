@@ -24,7 +24,7 @@ const LoginForm = () => {
       <div className="login-form-wrapper">
         <Formik
           initialValues={{
-            email: "nghiakg11432@gmail.com",
+            email: "",
             password: "",
           }}
           validationSchema={yup.object({
