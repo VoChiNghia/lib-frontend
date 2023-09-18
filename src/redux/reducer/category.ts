@@ -33,6 +33,6 @@ export const getAllCategory = createAsyncThunk("category", async () => {
     return response.data.metadata
   } catch (e) {
     const errors = e as any;
-    toast.error(errors?.response?.data?.message)
+    
   }
 });

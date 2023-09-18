@@ -95,7 +95,7 @@ export const getAllBook = createAsyncThunk("book", async (query?: any) => {
       localStorage.clear()
       window.location.reload()
     }
-    toast.error(errors?.response?.data?.message)
+   
   }
 });
 
@@ -108,7 +108,7 @@ export const createBook = createAsyncThunk(
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   }
 );
@@ -123,7 +123,7 @@ export const deleteBook = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -138,7 +138,7 @@ export const deleteBlog = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -153,7 +153,7 @@ export const deleteFile = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -171,7 +171,7 @@ export const updateCoveredBook = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -187,7 +187,7 @@ export const updateCoveredFile = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -203,7 +203,7 @@ export const updateFileBookPdf = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -220,7 +220,7 @@ export const updateBook = (id: string, body: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -238,7 +238,7 @@ export const updateCoveredBookByQuery = (fromdata: any, query: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -253,7 +253,7 @@ export const getBookById = (id: string) => {
        dispatch(getBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -268,7 +268,7 @@ export const borrowBook = (data:any) => {
        dispatch(borrowBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -282,7 +282,7 @@ export const getAllBorrowBook = () => {
        dispatch(getListBorrowBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -296,7 +296,7 @@ export const getAllBlog = () => {
        dispatch(getAllBlogReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -310,7 +310,7 @@ export const getBlogDetail = (id:any) => {
        dispatch(getBlogDetailReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -325,7 +325,7 @@ export const deleteBookBorrow = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -340,7 +340,7 @@ export const createBlog = createAsyncThunk(
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   }
 );
@@ -358,7 +358,7 @@ export const updateCoveredBlogByQuery = (fromdata: any, query: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -374,7 +374,7 @@ export const updateStatusBorrowBook = (data: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -388,7 +388,7 @@ export const createFile = createAsyncThunk(
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   }
 );
@@ -406,7 +406,7 @@ export const updateFile = (fromdata: any, query: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -421,7 +421,7 @@ export const getAllFile = () => {
        dispatch(getAllFileReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -435,7 +435,7 @@ export const getFileById = (id: any) => {
        dispatch(getFileByIdReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -449,7 +449,7 @@ export const getAllPenalty = () => {
        dispatch(getAllPenaltyReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -464,7 +464,7 @@ export const getAllListFavorite = () => {
        dispatch(getListFavoriteReducer(respone.data))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -480,7 +480,7 @@ export const getAllListFavoriteByUser = (id: any) => {
        
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -495,7 +495,7 @@ export const deleteItemFromListBooks = (data: any) => {
        
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -511,7 +511,7 @@ export const deleteFavorite = (id: any) => {
        
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -527,7 +527,7 @@ export const createPenalty = (data: any) => {
       return respone
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -541,7 +541,7 @@ export const createFavoriteBook = (data:any) => {
       toast.success(respone.data.metadata.message);  
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
@@ -556,7 +556,7 @@ export const getAllBookBorrowByMonth = () => {
        dispatch(getAllBorrowByMonthReducer(respone.data.metadata));
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+     
     }
   };
 };
