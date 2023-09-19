@@ -15,8 +15,9 @@ const dispatch= useDispatch()
   return (
 
     <Link to={`/${book._id}`}>
-    <div className="max-w-md mx-auto h-[310px] flex flex-col justify-between bg-white rounded-md overflow-hidden shadow-md hover:shadow-lg p-2">
-      <div className="relative">
+    <div className="max-w-md mx-auto h-[310px] flex flex-col justify-between transition-all bg-white rounded-md overflow-hidden shadow-md hover:border-[1px] hover:border-[#fb5a1c] hover:border-solid hover:shadow-lg p-2">
+      <div className="relative overlay-bookticket">
+      <i className="pi pi-book icon" style={{ color: 'green' }}></i>
       <img className="w-full h-48 object-cover" src={book.coverImage} alt="Book cover" />
       <p className="font-bold">{ book.name.length > 30 ? `${book?.name?.slice(0,30)} ...` : book.name}</p>
       <div className="bookMark"></div>

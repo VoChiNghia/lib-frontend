@@ -112,6 +112,7 @@ const Header = () => {
                     <ul className="py-1">
                       <Link to={`/list-book-borrow/${user._id}`}><li className="px-4 py-2 hover:bg-gray-100">Danh sách sách đăng kí mượn</li></Link>
                       <Link to={`/list-book-favorite/${user._id}`}><li className="px-4 py-2 hover:bg-gray-100">Danh sách yêu thích</li></Link>
+                      {user.role === 'admin' ? <Link to={`/admin`}><li className="px-4 py-2 hover:bg-gray-100">Truy cập trang quảng trị</li></Link> : null}
                       <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleChangePass}>Đổi mật khẩu</li>
                       <li className="px-4 py-2 hover:bg-gray-100" onClick={handleLogout}>Đăng xuất</li>
                     </ul>
@@ -133,6 +134,7 @@ const Header = () => {
           </div>
         )}
       </div>
+      
     </div>
   )
 }

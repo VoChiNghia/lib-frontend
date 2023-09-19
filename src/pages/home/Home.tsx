@@ -88,6 +88,11 @@ const Home = () => {
       <div className="home__container container ">
         <Header />
         {/* <BookTicket/> */}
+        <div className="overflow-hidden bg-gray-200 py-2">
+        <div className="running-text w-[1280] ">
+        <p className="text-orange-500">Chào mừng các bạn đên với phần mềm quản lý thư viên trường cao đẳng công nghệ cao đồng an {"        "}Chào mừng các bạn đên với phần mềm quản lý thư viên trường cao đẳng công nghệ cao đồng an</p>
+      </div>
+        </div>
         <div className="flex mt-6">
           <div className="w-60">
             <SideBar />

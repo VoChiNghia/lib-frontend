@@ -54,11 +54,15 @@ const Search = () => {
           className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-blue-500"
           placeholder="Tìm kiếm sách"
           value={searchQuery}
-          onChange={(e) => {
+          onChange={(e: any) => {
             setSearchQuery(e.target.value)
             console.log(searchQuery.length)
-            if(searchQuery.length === 0 || searchQuery.length === 1 ) setActive(false)
+            if(searchQuery.length === 0 || searchQuery.length === 1 ) setActive(false) 
+            if (e.key === 'Enter') {
+              console.log(e.key)
+            }
           }}
+
         />
         
       <div>

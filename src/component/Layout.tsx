@@ -64,6 +64,7 @@ const Layout = () => {
         <Route index path="/auth/:token" element={<VerifyTocken/>}></Route>
         <Route index path="/admin" element={userRole?.role || user?.role === "admin" ? <HomeAdmin /> :   <Navigate to="/login-form" replace={true} />}></Route>
         <Route index path="/" element={userRole?.role || user?.role === "user" ? <Home /> : <Navigate to="/login-form" replace={true} />}></Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </HistoryRouter>
   )

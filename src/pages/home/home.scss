@@ -3,6 +3,7 @@
         margin: 0 auto;
         background-color: white;
     }
+   
     .book-item{
         display: flex;
     }
@@ -45,5 +46,19 @@
             text-align: right;
             font-weight: 300;
         }
+        .running-text {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: running-text 80s linear infinite;
+          }
+          
+          @keyframes running-text {
+            0% {
+              transform: translateX(100%);
+            }
+            100% {
+              transform: translateX(-100%);
+            }
+          }
     }
    
