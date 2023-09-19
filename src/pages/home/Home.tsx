@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import "./home.scss"
 import Header from "../../componentClient/header/Header"
 import BookTicket from "../../componentClient/bookTicket/BookTicket"
 import SideBar from "../../componentClient/sideBar/SideBar"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
+import { Toast } from "primereact/toast"
 import "swiper/css/scrollbar"
 import "swiper/css/pagination"
 import { useDispatch, useSelector } from "react-redux"
@@ -15,8 +16,11 @@ import { Link } from "react-router-dom"
 import { Button } from "primereact/button"
 import { Carousel } from "primereact/carousel"
 import Footer from "../../componentClient/footer/Footer"
+import FormBorrowBook from "../../componentClient/formBorrowBook/FormBorrowBook"
+import { changeComponent, setIsOpenCompoent } from "../../redux/reducer/modal"
 const Home = () => {
   const dispatch: DispatchType = useDispatch()
+  const toast = useRef<any>(null)
   const { book, totalBooks, allBlog, allFile } = useSelector((state: RootState) => state.book)
   const getAllBookApi = () => {
     dispatch(getAllBook(""))
@@ -63,6 +67,10 @@ const Home = () => {
     },
   ]
 
+  const showWarn = () => {
+    toast.current.show({ severity: "warn", summary: "Thông báo", detail: "Không Tìm thấy file pdf", life: 3000 })
+  }
+
   const productTemplate = (product: any) => {
     return (
       <div className=" blockquote-wrapper border-1 surface-border border-round rounded m-2 text-center py-5 px-3">
@@ -76,6 +84,7 @@ const Home = () => {
 
   return (
     <div className="home bg-white">
+       <Toast ref={toast} />
       <div className="home__container container ">
         <Header />
         {/* <BookTicket/> */}
@@ -117,21 +126,35 @@ const Home = () => {
               <h1 className="bg-[#FF9138] p-2 font-bold rounded text-white">Book</h1>
               <div className="my-2 grid grid-cols-5 gap-4">
                 {book?.slice(0, 10).map((book: any, index: any) => (
-                  <BookTicket key={index} book={book} />
+                  <BookTicket key={index} book={book}/>
                 ))}
               </div>
             </div>
 
             <div>
               <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Tài liệu</h1>
-              <div className="flex">
+              <div className=" grid grid-cols-5">
                 {allFile?.slice(0, 4).map((blog: any, index: any) => (
-                  <Link to={`/file/${blog._id}`}>
-                    <div className="w-64 h-96 mx-2 flex flex-col justify-between">
-                      <img className="w-64" src={blog.image} alt="" />
+                    <div className="w-48 h-96 mx-2 flex flex-col justify-between">
+                      <img className="w-full" src={blog.image} alt="" />
+                      <div>
                       <p className="font-bold text-xl text-center">{blog.tenMonHoc.toUpperCase()}</p>
+                      <div
+                      className="w-full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const pdfLink = blog?.filePdf
+                    if (pdfLink) {
+                      window.open(pdfLink, "_blank")
+                    } else {
+                      showWarn()
+                    }
+                  }}
+                >
+                  <Button className="w-full" label="Pdf" outlined />
+                </div>
+                      </div>
                     </div>
-                  </Link>
                 ))}
               </div>
             </div>

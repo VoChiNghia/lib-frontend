@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.f1dde906.css",
-    "main.js": "/static/js/main.e7b9d971.js",
+    "main.css": "/static/css/main.bea8a410.css",
+    "main.js": "/static/js/main.9e3e18ee.js",
     "static/media/primeicons.svg": "/static/media/primeicons.e1441b135b3ca9ad643c.svg",
     "static/media/concept-de-bibliotheque-numerique-etudiants-universitaires-livres-en-ligne-lecture-cours-de-langue-media-lisant-des-fichiers-adolescents-apprenant-lire-ebook-snlaid-vecteur-2k8f72t.jpg": "/static/media/concept-de-bibliotheque-numerique-etudiants-universitaires-livres-en-ligne-lecture-cours-de-langue-media-lisant-des-fichiers-adolescents-apprenant-lire-ebook-snlaid-vecteur-2k8f72t.52623dec4438d789307b.jpg",
     "static/media/primeicons.eot": "/static/media/primeicons.d44157bdfa026dc877af.eot",
@@ -11,11 +11,11 @@
     "static/media/color.png": "/static/media/color.6441e63a57ccc5105bad.png",
     "static/media/icon-3.webp": "/static/media/icon-3.274de0b776eece1629fc.webp",
     "index.html": "/index.html",
-    "main.f1dde906.css.map": "/static/css/main.f1dde906.css.map",
-    "main.e7b9d971.js.map": "/static/js/main.e7b9d971.js.map"
+    "main.bea8a410.css.map": "/static/css/main.bea8a410.css.map",
+    "main.9e3e18ee.js.map": "/static/js/main.9e3e18ee.js.map"
   },
   "entrypoints": [
-    "static/css/main.f1dde906.css",
-    "static/js/main.e7b9d971.js"
+    "static/css/main.bea8a410.css",
+    "static/js/main.9e3e18ee.js"
   ]
 }

@@ -52,7 +52,7 @@ const Search = () => {
         <input
           type="text"
           className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-blue-500"
-          placeholder="Search..."
+          placeholder="Tìm kiếm sách"
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value)
@@ -60,7 +60,14 @@ const Search = () => {
             if(searchQuery.length === 0 || searchQuery.length === 1 ) setActive(false)
           }}
         />
-        <Button icon="pi pi-search"  onClick={handleSearch} severity="warning" aria-label="Search" />
+        
+      <div>
+      <Button icon="pi pi-times" rounded text severity="secondary" aria-label="Cancel" onClick={() => {
+        setSearchQuery('')
+        setActive(false)
+      }} />
+      <Button icon="pi pi-search"  onClick={handleSearch} severity="warning" aria-label="Search" />
+      </div>
     </div>
     <div className="absolute z-10">
     {
@@ -73,7 +80,7 @@ const Search = () => {
         rows={5}
         inline
         scrollHeight="500px"
-        header="Scroll Down to Load More"
+        header="Cuộn xuống để tải thêm"
         
       />
       : null

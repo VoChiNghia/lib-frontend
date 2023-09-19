@@ -28,6 +28,7 @@ const DetailBook = () => {
   const currentURL = window.location.href
   useEffect(() => {
     dispatch(getBookById(String(id)))
+    window.scrollTo(0, 0)
   }, [])
 
   const openFormBorrow = () => {

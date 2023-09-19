@@ -3,7 +3,15 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import './bookTicket.scss'
+import FormBorrowBook from "../formBorrowBook/FormBorrowBook"
+import { changeComponent, setIsOpenCompoent } from "../../redux/reducer/modal"
+import { useDispatch } from "react-redux"
 const BookTicket = ({book}: any) => {
+const dispatch= useDispatch()
+  const openFormBorrow = (id: string) => {
+    dispatch(changeComponent(<FormBorrowBook id={id} />))
+    dispatch(setIsOpenCompoent(true))
+  }
   return (
 
     <Link to={`/${book._id}`}>
@@ -15,6 +23,7 @@ const BookTicket = ({book}: any) => {
       </div>
       <button
           className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none"
+          onClick={() => openFormBorrow(book._id)}
         >
           Mượn
         </button>
