@@ -20,6 +20,7 @@ import FormAddBlog from "../../component/form/formAddBlog/FormAddBlog";
 import BookBorrow from "../../component/addminTabs/bookBorrow/BookBorrow";
 import { changeComponent } from "../../redux/reducer/compoentGlobal";
 import BlogManage from "../../component/addminTabs/blogManage/BlogManage";
+import ThongKe from "../../component/addminTabs/thongke/ThongKe";
 const logo1 = require("../../assets/images/icon-3.webp");
 
 interface StrategyType {
@@ -28,13 +29,15 @@ interface StrategyType {
   userManage:JSX.Element
   createBlog:JSX.Element
   bookBorrow:JSX.Element
+  thongKe:JSX.Element
 }
 const strategy: StrategyType = {
   dashboard: <Dashboard />,
   bookManage: <BookManage />,
   userManage: <UserManage />,
   createBlog: <BlogManage />,
-  bookBorrow:<BookBorrow/>
+  bookBorrow:<BookBorrow/>,
+  thongKe:<ThongKe/>
 } 
 
 const HomeAdmin = () => {
@@ -117,7 +120,7 @@ const HomeAdmin = () => {
             <li
               ref={pushRef}
               className="home-container__left-side__list-item"
-              onClick={(e) => handleClickItem(e,'bookBorrow')}
+              onClick={(e) => handleClickItem(e,'thongKe')}
             >
               <div>
                 <span>

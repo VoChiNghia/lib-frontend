@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { DispatchType } from "../redux/store";
 import AddFile from "../component/form/formAddFile/AddFile";
 import { Button } from "primereact/button";
+import AddCategory from '../component/form/formAddCategory/AddCategory'
 
 
 const ExportToExcel = ({dataList}: any) => {
@@ -135,6 +136,12 @@ const AddFileBtn = () => {
         dispatch(setIsOpenCompoent(true))
   
 };
+
+const AddCategory2 = () => {
+  dispatch(changeComponent(<AddCategory />))
+        dispatch(setIsOpenCompoent(true))
+  
+};
 const items = [
   {
     label: 'Thêm tài liệu',
@@ -165,6 +172,7 @@ const items = [
    <div className="">
      <Button label="Thêm sách" icon='pi pi-plus' className="mx-2" raised  onClick={AddBookBtn}/>
      <Button label="Thêm Tài liệu" icon='pi pi-plus' className="mx-2" text raised  onClick={AddFileBtn}/>
+     <Button label="Thêm Thể loại" icon='pi pi-plus' className="mx-2" text raised  onClick={AddCategory2}/>
      <Button label="Xuất excel" icon='pi pi-file-excel' className="mx-2" text raised onClick={() => exportToExcel(dataList)}/>
    </div>
     

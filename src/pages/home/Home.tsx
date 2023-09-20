@@ -139,7 +139,7 @@ const Home = () => {
             <div>
               <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Tài liệu</h1>
               <div className=" grid grid-cols-5">
-                {allFile?.slice(0, 4).map((blog: any, index: any) => (
+                {allFile?.slice(0, 5).map((blog: any, index: any) => (
                     <div className="w-48 h-96 mx-2 flex flex-col justify-between">
                       <img className="w-full" src={blog.image} alt="" />
                       <div>

@@ -23,9 +23,10 @@ const AddBlog = ({getValueContent}: any) => {
             toolbar: {
               container: [
                 [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['link', 'image'],
-                ['clean'],
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+              [{ 'size': ['small', false, 'large', 'huge'] }], // Thêm tùy chọn kích thước font
+              ['link', 'image'],
+              ['clean'],
               ],
             },
           }}

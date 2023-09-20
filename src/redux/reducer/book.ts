@@ -546,6 +546,20 @@ export const createFavoriteBook = (data:any) => {
   };
 };
 
+export const createCatetogy = (data:any) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const respone: AxiosResponse = await http.post(
+        '/api/category',data
+      );
+      toast.success(respone.data.message);  
+    } catch (e) {
+      const errors = e as any;
+     
+    }
+  };
+};
+
 export const getAllBookBorrowByMonth = () => {
   return async (dispatch: DispatchType) => {
     try {

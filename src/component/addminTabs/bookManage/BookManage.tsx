@@ -120,6 +120,7 @@ const BookManage = () => {
                               setVisible(true)
                               setActionData(rowData._id)
                             }}/>
+                            
       </div>
     );
 };

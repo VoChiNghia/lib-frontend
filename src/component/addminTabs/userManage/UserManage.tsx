@@ -64,7 +64,6 @@ const UserManage = () => {
   const representativeBodyTemplate = (rowData: any) => {
     return (
         <div className="flex align-items-center gap-2">
-             
             <button onClick={() => hanldeEdit(rowData)} className="btn-edit">
                     <span>
                       <AiOutlineEdit />
