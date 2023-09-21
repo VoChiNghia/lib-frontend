@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { DispatchType } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, RootState } from "../../../redux/store";
 import { getAllBook, getAllFile, updateCoveredBook, updateCoveredFile, updateFile, updateFileBookPdf } from "../../../redux/reducer/book";
 import "./index.scss";
 import ButtonSolid from "../../button/ButtonSolid";
 import { Button } from "primereact/button";
+import Loading from "../../loading/Loading";
 
 type Props = {
   idUpdate: string;
@@ -13,7 +14,7 @@ type Props = {
 
 const UploadFilepdf = ({ idUpdate, type }: Props) => {
   const [selected, setSelected] = useState();
-
+  const { loading } = useSelector((state: RootState) => state.book)
   const dispatch: DispatchType = useDispatch();
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -29,10 +30,11 @@ const UploadFilepdf = ({ idUpdate, type }: Props) => {
     
     }
   };
-
+  console.log(loading)
   return (
     <div className="add-image">
-      <label htmlFor="custom-file-upload" className="filupp">
+      <div>
+        <label htmlFor="custom-file-upload" className="filupp">
         <span className="filupp-file-name js-value">Browse Files</span>
         <input
           type="file"
@@ -43,8 +45,11 @@ const UploadFilepdf = ({ idUpdate, type }: Props) => {
         />
       </label>
       <div className="add-image__btn">
-      <Button label="Thêm file" raised onClick={handleSubmit}/>
+      <Button label={loading ? 'Loading' : 'Thêm file'} raised onClick={handleSubmit}/>
       </div>
+      </div>
+      
+      
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { changeComponent, setIsOpenCompoent } from "../../redux/reducer/modal"
 import { DispatchType } from "../../redux/store"
 import { useDispatch } from "react-redux"
 import ChangePassword from "../../component/form/formChangePass/ChangePass"
+import { setLoading, setLoading2 } from "../../redux/reducer/book"
 const logo = require("../../assets/images/icon-3.webp")
 const Header = () => {
   const [user, setUser] = useState<any>(null)
@@ -50,9 +51,13 @@ const Header = () => {
     setIsOpen(!isOpen)
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    dispatch(setLoading2(true))
    localStorage.clear();
    history.push('/login-form')
+   setTimeout(() => {
+    dispatch(setLoading2(false))
+   }, 3000);
   };
   const [scrolling, setScrolling] = useState(false);
 

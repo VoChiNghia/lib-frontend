@@ -21,7 +21,8 @@ const initialState: any = {
   fileDetail: null,
   listFavorite: null,
   listFavoriteByUser: null,
-  statisticalBorrow:null
+  statisticalBorrow:null,
+  loading2: false
 };
 const bookSlice = createSlice({
   name: "book",
@@ -33,6 +34,9 @@ const bookSlice = createSlice({
     },  
     setLoading: (state, action) => {
       state.loading = action.payload
+    },
+    setLoading2: (state, action) => {
+      state.loading2 = action.payload
     },
     borrowBookReducer: (state, action) => {
         state.borrow = action.payload
@@ -79,7 +83,7 @@ getAllBorrowByMonthReducer: (state, action) => {
   },
 });
 
-export const {getBookReducer,getListFavoriteByUserReducer,getAllBorrowByMonthReducer,getListFavoriteReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer,getAllPenaltyReducer,getFileByIdReducer} = bookSlice.actions;
+export const {getBookReducer,getListFavoriteByUserReducer,setLoading2,getAllBorrowByMonthReducer,getListFavoriteReducer,setLoading,getListBorrowBookReducer,borrowBookReducer,getAllBlogReducer,getBlogDetailReducer,getAllFileReducer,getAllPenaltyReducer,getFileByIdReducer} = bookSlice.actions;
 export default bookSlice.reducer;
 
 export const getAllBook = createAsyncThunk("book", async (query?: any) => {
@@ -89,6 +93,7 @@ export const getAllBook = createAsyncThunk("book", async (query?: any) => {
     return respone.data.metadata;
   } catch (e) {
     const errors = e as any;
+    toast.error(errors?.response?.data?.message)
     if(errors?.response?.data?.httpCode !== '200')
     {
       history.push('/login-form')
@@ -108,7 +113,7 @@ export const createBook = createAsyncThunk(
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   }
 );
@@ -123,7 +128,7 @@ export const deleteBook = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -138,7 +143,7 @@ export const deleteBlog = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -153,7 +158,7 @@ export const deleteFile = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -171,7 +176,7 @@ export const updateCoveredBook = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -187,23 +192,26 @@ export const updateCoveredFile = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
 
 export const updateFileBookPdf = (id: string, fromdata: any) => {
-  return async () => {
+  return async (dispatch: DispatchType) => {
     try {
+      dispatch(setLoading(true))
       const respone: AxiosResponse = await http.put(
         `/api/book/file-pdf/${id}`,
         fromdata
       );
+      dispatch(setLoading(true))
       toast.success(respone.data.message);
+
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -220,7 +228,7 @@ export const updateBook = (id: string, body: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -238,7 +246,7 @@ export const updateCoveredBookByQuery = (fromdata: any, query: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -253,7 +261,7 @@ export const getBookById = (id: string) => {
        dispatch(getBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -268,7 +276,7 @@ export const borrowBook = (data:any) => {
        dispatch(borrowBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -282,7 +290,7 @@ export const getAllBorrowBook = () => {
        dispatch(getListBorrowBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -296,7 +304,7 @@ export const getAllBlog = () => {
        dispatch(getAllBlogReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -310,7 +318,7 @@ export const getBlogDetail = (id:any) => {
        dispatch(getBlogDetailReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };
@@ -325,7 +333,7 @@ export const deleteBookBorrow = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-     
+      toast.error(errors?.response?.data?.message)
     }
   };
 };

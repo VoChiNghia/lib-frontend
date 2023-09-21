@@ -18,10 +18,13 @@ import { Carousel } from "primereact/carousel"
 import Footer from "../../componentClient/footer/Footer"
 import FormBorrowBook from "../../componentClient/formBorrowBook/FormBorrowBook"
 import { changeComponent, setIsOpenCompoent } from "../../redux/reducer/modal"
+import Loading2 from "../../component/loading2/Loading2"
+import FormInfo from "../../component/form/formInfo/FormInfo"
+import CardBlog from "../../component/cardBlog/CardBlog"
 const Home = () => {
   const dispatch: DispatchType = useDispatch()
   const toast = useRef<any>(null)
-  const { book, totalBooks, allBlog, allFile } = useSelector((state: RootState) => state.book)
+  const { book, totalBooks, allBlog, allFile, loading2 } = useSelector((state: RootState) => state.book)
   const getAllBookApi = () => {
     dispatch(getAllBook(""))
     dispatch(getAllCategory())
@@ -37,7 +40,8 @@ const Home = () => {
       author: "Mahatma Gandhi",
     },
     {
-      title: "Tôi không có quyền quyết định điều gì sẽ xảy ra với tôi, nhưng tôi có quyền quyết định làm gì với những gì xảy ra.",
+      title:
+        "Tôi không có quyền quyết định điều gì sẽ xảy ra với tôi, nhưng tôi có quyền quyết định làm gì với những gì xảy ra.",
       author: "Mary Engelbreit",
     },
     {
@@ -82,16 +86,24 @@ const Home = () => {
     )
   }
 
+  const handleClick = (item: any) => {
+    dispatch(changeComponent(<FormInfo jsx={item} />))
+    dispatch(setIsOpenCompoent(true))
+  }
   return (
     <div className="home bg-white">
-       <Toast ref={toast} />
+      <Toast ref={toast} />
+      {loading2 ? <Loading2 /> : null}
       <div className="home__container container ">
         <Header />
         {/* <BookTicket/> */}
         <div className="overflow-hidden bg-gray-200 py-2">
-        <div className="running-text w-[1280] ">
-        <p className="text-orange-500">Chào mừng các bạn đên với phần mềm quản lý thư viên trường cao đẳng công nghệ cao đồng an {"        "}Chào mừng các bạn đên với phần mềm quản lý thư viên trường cao đẳng công nghệ cao đồng an</p>
-      </div>
+          <div className="running-text w-[1280] ">
+            <p className="text-orange-500">
+              Chào mừng các bạn đên với phần mềm quản lý thư viên trường cao đẳng công nghệ cao đồng an {"        "}Chào
+              mừng các bạn đên với phần mềm quản lý thư viên trường cao đẳng công nghệ cao đồng an
+            </p>
+          </div>
         </div>
         <div className="flex mt-6">
           <div className="w-60">
@@ -131,7 +143,7 @@ const Home = () => {
               <h1 className="bg-[#FF9138] p-2 font-bold rounded text-white">Book</h1>
               <div className="my-2 grid grid-cols-5 gap-4">
                 {book?.slice(0, 10).map((book: any, index: any) => (
-                  <BookTicket key={index} book={book}/>
+                  <BookTicket key={index} book={book} />
                 ))}
               </div>
             </div>
@@ -140,49 +152,49 @@ const Home = () => {
               <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Tài liệu</h1>
               <div className=" grid grid-cols-5">
                 {allFile?.slice(0, 5).map((blog: any, index: any) => (
-                    <div className="w-48 h-96 mx-2 flex flex-col justify-between">
-                      <img className="w-full" src={blog.image} alt="" />
-                      <div>
-                      <p className="font-bold text-xl text-center">{blog.tenMonHoc.toUpperCase()}</p>
+                  <div
+                    className="w-48 h-96 mx-2 flex flex-col justify-between hover:shadow-lg"
+                    onClick={() => handleClick(blog)}
+                  >
+                    <img className="w-full" src={blog.image} alt="" />
+                    <div>
+                      <p className="font-bold text-xl text-center">
+                        {blog.tenMonHoc.length > 30 ? `${blog?.tenMonHoc?.slice(0, 30)} ...` : blog.tenMonHoc}
+                      </p>
                       <div
-                      className="w-full"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    const pdfLink = blog?.filePdf
-                    if (pdfLink) {
-                      window.open(pdfLink, "_blank")
-                    } else {
-                      showWarn()
-                    }
-                  }}
-                >
-                  <Button className="w-full" label="Pdf" outlined />
-                </div>
+                        className="w-full"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          const pdfLink = blog?.filePdf
+                          if (pdfLink) {
+                            window.open(pdfLink, "_blank")
+                          } else {
+                            showWarn()
+                          }
+                        }}
+                      >
+                        <Button className="w-full" label="Pdf" outlined />
                       </div>
                     </div>
+                  </div>
                 ))}
               </div>
             </div>
 
             <div>
               <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Bài viết mới</h1>
-              <div className="flex">
+              <div className="grid grid-cols-3">
                 {allBlog?.slice(0, 4).map((blog: any, index: any) => (
-                  <Link to={`/blog/${blog._id}`}>
-                    <div className="w-64 mx-2">
-                      <img className="w-64" src={blog.thumbnail} alt="" />
-                      <p className="font-bold text-xl text-center">{blog.title}</p>
-                    </div>
+                  <Link to={`/blog/${blog._id}`} className="m-4">
+                    <CardBlog item={blog}/>
                   </Link>
                 ))}
               </div>
             </div>
           </div>
         </div>
-
-      
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
