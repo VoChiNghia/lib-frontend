@@ -32,12 +32,13 @@ import FormPenalty from "../../form/formPenalty/FormApprove"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import FormApprove from "../../form/formAprove/FormApprove"
 import { deleteRequestBook, getAllRequest } from "../../../redux/reducer/requestBook"
+
 const BookBorrow = () => {
   const toast = useRef<any>(null)
   const [visible, setVisible] = useState<boolean>(false)
   const [type, setType] = useState<string>("")
   const [actionData, setActionData] = useState(null)
-
+  const [message, setMessage] = useState("mesage");
   const { getListBorrowBook,allPenalty } = useSelector((state: RootState) => state.book)
   const { requestBook } = useSelector((state: RootState) => state.requestBook)
 
@@ -55,6 +56,8 @@ const BookBorrow = () => {
    
    
   }
+
+  
   const handleSubmit = () => {}
   const handleUpdateStatus = async (item: any) => {
     dispatch(changeComponent(<FormApprove id={item._id} />))
@@ -152,6 +155,7 @@ const BookBorrow = () => {
 
   return (
     <div className="book__manage">
+       
       <ConfirmDialog
         visible={visible}
         onHide={reject}
@@ -161,7 +165,6 @@ const BookBorrow = () => {
         accept={accept}
         reject={reject}
       />
-
 <Tabs>
     <TabList>
       <Tab>Sách mượn</Tab>
@@ -225,6 +228,8 @@ const BookBorrow = () => {
         ></Column>
         
       </DataTable>
+
+    
     </TabPanel>
     <TabPanel>
     <DataTable scrollable  value={allPenalty} paginator rows={4} rowsPerPageOptions={[4,5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
@@ -249,7 +254,7 @@ const BookBorrow = () => {
     </TabPanel>
   </Tabs>
 
-      
+  
     </div>
   )
 }

@@ -81,6 +81,7 @@ const BookManage = () => {
   }
   const hanldeDelete = (id: any) => {
     dispatch(deleteBook(id))
+    getAllBookApi()
   }
   const updateCoverBook = (id: string) => {
     dispatch(changeComponent(<UploadCoverImage idUpdate={id} />))

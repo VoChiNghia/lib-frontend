@@ -184,7 +184,7 @@ const Home = () => {
             <div>
               <h1 className="bg-[#FF9138] my-3 p-2 font-bold rounded text-white">Bài viết mới</h1>
               <div className="grid grid-cols-3">
-                {allBlog?.slice(0, 4).map((blog: any, index: any) => (
+                {allBlog?.slice(0, 3).map((blog: any, index: any) => (
                   <Link to={`/blog/${blog._id}`} className="m-4">
                     <CardBlog item={blog}/>
                   </Link>

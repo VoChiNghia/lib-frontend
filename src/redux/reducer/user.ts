@@ -38,7 +38,9 @@ export const getAllUser = createAsyncThunk("user", async () => {
     return respone.data.metadata;
   } catch (e) {
     const errors = e as any;
-    toast.error(errors?.response?.data?.message)
+    if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
   }
 });
 
@@ -51,7 +53,9 @@ export const createBook = createAsyncThunk(
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   }
 );
@@ -66,7 +70,9 @@ export const deleteUser = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -83,7 +89,9 @@ export const updateCoveredBook = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -99,7 +107,9 @@ export const updateUser = (id: string, body: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -115,7 +125,9 @@ export const updatePassword = (body: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -133,7 +145,9 @@ export const updateCoveredBookByQuery = (fromdata: any, query: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };

@@ -23,6 +23,7 @@ import ShowAllFile from "../pages/showAllFile/ShowAllFile"
 import Profile from "../pages/profile/Profile"
 import ListFavoriteBook from "../pages/listFavoriteBook/ListFavoriteBook"
 import DetailFile from "../pages/detailFile/DetailFile"
+import ForgotPassword from "../pages/forgotPassword/ForgotPass"
 
 
 export const history = createBrowserHistory({ v5Compat: true })
@@ -60,6 +61,7 @@ const Layout = () => {
         <Route index path="/blog/:id" element={<BlogDetail/>}></Route>
         <Route index path="/files/:id" element={<DetailFile/>}></Route>
         <Route index path="/profile" element={<Profile/>}></Route>
+        <Route index path="/forgotpassword" element={<ForgotPassword/>}></Route>
         <Route index path="/list-book-favorite/:id" element={<ListFavoriteBook/>}></Route>
         <Route index path="/auth/:token" element={<VerifyTocken/>}></Route>
         <Route index path="/admin" element={userRole?.role || user?.role === "admin" ? <HomeAdmin /> :   <Navigate to="/login-form" replace={true} />}></Route>

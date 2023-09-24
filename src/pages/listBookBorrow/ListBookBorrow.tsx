@@ -15,7 +15,7 @@ import { Button } from "primereact/button"
 const ListBookBorrow = () => {
   const { getListBorrowBook } = useSelector((state: RootState) => state.book)
   const { id } = useParams()
-
+  console.log(getListBorrowBook)
   const historyBorrow = null
   const dispatch: DispatchType = useDispatch()
 
@@ -76,7 +76,6 @@ const ListBookBorrow = () => {
       </div>
     )
   }
-
   return (
     <div className="w-[1200px] mx-auto">
       <div>
@@ -92,7 +91,7 @@ const ListBookBorrow = () => {
         <TabPanel>
           <DataTable
             scrollable
-            value={getListBorrowBook}
+            value={getListBorrowBook?.filter((book: any) => book.userId._id === id)}
             paginator
             rows={4}
             rowsPerPageOptions={[4, 5, 10, 25, 50]}

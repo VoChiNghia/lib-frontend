@@ -93,7 +93,9 @@ export const getAllBook = createAsyncThunk("book", async (query?: any) => {
     return respone.data.metadata;
   } catch (e) {
     const errors = e as any;
-    toast.error(errors?.response?.data?.message)
+    if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     if(errors?.response?.data?.httpCode !== '200')
     {
       history.push('/login-form')
@@ -113,7 +115,9 @@ export const createBook = createAsyncThunk(
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   }
 );
@@ -128,7 +132,9 @@ export const deleteBook = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -143,7 +149,9 @@ export const deleteBlog = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -158,7 +166,9 @@ export const deleteFile = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -176,7 +186,9 @@ export const updateCoveredBook = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -192,7 +204,9 @@ export const updateCoveredFile = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -211,7 +225,9 @@ export const updateFileBookPdf = (id: string, fromdata: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -228,7 +244,9 @@ export const updateBook = (id: string, body: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -246,7 +264,9 @@ export const updateCoveredBookByQuery = (fromdata: any, query: any) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -261,7 +281,9 @@ export const getBookById = (id: string) => {
        dispatch(getBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -276,7 +298,9 @@ export const borrowBook = (data:any) => {
        dispatch(borrowBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -290,7 +314,9 @@ export const getAllBorrowBook = () => {
        dispatch(getListBorrowBookReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -304,7 +330,9 @@ export const getAllBlog = () => {
        dispatch(getAllBlogReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -318,7 +346,9 @@ export const getBlogDetail = (id:any) => {
        dispatch(getBlogDetailReducer(respone.data.metadata))
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };
@@ -333,7 +363,9 @@ export const deleteBookBorrow = (id: string) => {
       return respone.data.metadata;
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   };
 };

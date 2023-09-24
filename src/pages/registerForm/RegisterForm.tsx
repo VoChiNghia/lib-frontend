@@ -105,7 +105,6 @@ const RegisterForm = () => {
                   </div>
                 </div>
               </Form>
-              <span>Quên mật khẩu?</span>
             </div>
 
               <Link to='/login-form'><span className="text-blue-500 cursor-pointer my-2 text-blue-500">Đăng nhập</span></Link>

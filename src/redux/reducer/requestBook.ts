@@ -34,7 +34,9 @@ const initialState: any = {
       return response.data.metadata
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   });
 
@@ -44,7 +46,9 @@ const initialState: any = {
       return response.data
     } catch (e) {
       const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
     }
   });
 
@@ -56,7 +60,9 @@ const initialState: any = {
         return response;
       } catch (e) {
         const errors = e as any;
-      toast.error(errors?.response?.data?.message)
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
       }
 
     }

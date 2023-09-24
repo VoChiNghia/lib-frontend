@@ -1,5 +1,6 @@
 import React from "react"
 import './cardblog.scss'
+import moment from "moment"
 const CardBlog = ({ item }: any) => {
   return (
     <div className="blog_post">
@@ -7,7 +8,7 @@ const CardBlog = ({ item }: any) => {
         <img src={item.thumbnail} alt="random image" />
       </div>
       <div className="container_copy">
-        <h3>12 January 2019</h3>
+        <h3>{moment(item.createdAt).format('dd/MM/yyyy')}</h3>
         <h1>{item.title}</h1>
         <p>
           The position property specifies the type of positioning method used for an element (static, relative,

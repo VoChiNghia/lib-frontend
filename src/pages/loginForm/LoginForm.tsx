@@ -76,7 +76,9 @@ const LoginForm = () => {
                   </div>
                 </div>
               </Form>
+              <Link to="/forgotpassword">
               <span>Quên mật khẩu?</span>
+              </Link>
             </div>
             <Link to='/register-form'><span className="text-blue-500 cursor-pointer">Đăng kí</span></Link>
 

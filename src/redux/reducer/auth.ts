@@ -55,7 +55,9 @@ export const login = createAsyncThunk("auth/login", async (data: any) => {
     return respone.data.metadata
   } catch (e) {
     const errors = e as any;
-    toast.error(errors?.response?.data?.message)
+    if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
   }
 });
 
@@ -68,7 +70,9 @@ export const register = createAsyncThunk("auth/signup", async (data: any) => {
     return respone.data.metadata
   } catch (e) {
     const errors = e as any;
-    toast.error(errors?.response?.data?.message)
+    if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
   }
 });
 
@@ -78,8 +82,27 @@ export const logout = createAsyncThunk("auth/logout", async (id: string) => {
     return respone.data.message
   } catch (e) {
     const errors = e as any;
-    toast.error(errors?.response?.data?.message)
+    if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
   }
 });
+
+export const forgotPassword = (data: any) => {
+  return async () => {
+    try {
+      const respone:AxiosResponse = await http.post(`/api/auth/forgot-password`,data);
+      console.log(respone)
+      return respone.data.message
+    } catch (e) {
+      const errors = e as any;
+      if(errors?.response?.data?.message !== 'Invalid client id'){
+        if(errors?.response?.data?.message !== 'Invalid client id'){
+        toast.error(errors?.response?.data?.message)
+      }
+      }
+    }
+  }
+}
 
 
