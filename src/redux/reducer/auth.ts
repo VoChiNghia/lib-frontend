@@ -9,7 +9,7 @@ const initialState: any = {
   login: '',
   loading: false,
   role: '',
-  user: null
+  user: ''
 };
 const authSlice = createSlice({
   name: "auth",

@@ -29,7 +29,7 @@ const DetailBook = () => {
   useEffect(() => {
     dispatch(getBookById(String(id)))
     window.scrollTo(0, 0)
-  }, [])
+  }, [id])
 
   const openFormBorrow = () => {
     dispatch(changeComponent(<FormBorrowBook id={id} />))

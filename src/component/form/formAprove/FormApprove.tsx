@@ -15,6 +15,7 @@ const FormApprove = ({ id }: any) => {
     { value: "borrowed", name: "Đã mượn" },
     { value: "notExist", name: "Sách đã hết" },
   ]
+  console.log(id)
   const dispatch: DispatchType = useDispatch()
   const handleUpdateStatus = async () => {
     const action = {

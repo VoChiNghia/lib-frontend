@@ -34,11 +34,9 @@ import FormApprove from "../../form/formAprove/FormApprove"
 import { deleteRequestBook, getAllRequest } from "../../../redux/reducer/requestBook"
 
 const BookBorrow = () => {
-  const toast = useRef<any>(null)
   const [visible, setVisible] = useState<boolean>(false)
   const [type, setType] = useState<string>("")
   const [actionData, setActionData] = useState(null)
-  const [message, setMessage] = useState("mesage");
   const { getListBorrowBook,allPenalty } = useSelector((state: RootState) => state.book)
   const { requestBook } = useSelector((state: RootState) => state.requestBook)
 
@@ -50,14 +48,12 @@ const BookBorrow = () => {
     dispatch(getAllRequest())
   }, [])
   const hanldeEdit = (item: any) => {}
-  const hanldeDelete = (id: any) => {
-    dispatch(deleteBookBorrow(id))
-    dispatch(getAllBorrowBook())
+  const hanldeDelete = async (id: any) => {
+   await  dispatch(deleteBookBorrow(id))
+   await dispatch(getAllBorrowBook())
    
    
   }
-
-  
   const handleSubmit = () => {}
   const handleUpdateStatus = async (item: any) => {
     dispatch(changeComponent(<FormApprove id={item._id} />))
@@ -82,11 +78,11 @@ const BookBorrow = () => {
         ? (
           <p className="bg-red-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
         ) 
-        : item?.status === "approved" 
+        : item?.status === "approve" 
         ? (
           <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
         )
-        :  item?.status === "return" ?  <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        :  item?.status === "return" ?  <p className="bg-sky-500 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
         :  item?.status === "borrowed" ?  <p className="bg-blue-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
         :
         (
@@ -102,7 +98,6 @@ const BookBorrow = () => {
   const representativeBodyTemplateRequest = (item: any) => {
     return (
       <div className="w-full">
-        {/* <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel" onClick={() => hanldeEdit(item)}/> */}
 
           <Button
             icon="pi pi-times"
@@ -110,9 +105,9 @@ const BookBorrow = () => {
             text
             severity="danger"
             aria-label="Cancel"
-            onClick={() => {
-              dispatch(deleteRequestBook(item._id))
-              dispatch(getAllRequest())
+            onClick={async () => {
+              await dispatch(deleteRequestBook(item._id))
+              await dispatch(getAllRequest())
             }}
           />
       </div>
@@ -122,7 +117,6 @@ const BookBorrow = () => {
   const representativeBodyTemplate4 = (item: any) => {
     return (
       <div className="w-full">
-        <Button icon="pi  pi-file-edit" rounded text severity="success" aria-label="Cancel" onClick={() => hanldeEdit(item)}/>
         <Button icon="pi pi-times" rounded text severity="danger" aria-label="Cancel" onClick={() => {
             setType("delete")
             setVisible(true)

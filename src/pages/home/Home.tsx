@@ -121,6 +121,7 @@ const Home = () => {
                 </SwiperSlide>
                 <SwiperSlide>
                   <img
+                   className="w-full"
                     src="https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner/0/0/0/2419_new.jpg?v=1&w=1580&h=400"
                     alt=""
                   />
@@ -140,7 +141,7 @@ const Home = () => {
               />
             </div>
             <div className="mt-6">
-              <h1 className="bg-[#FF9138] p-2 font-bold rounded text-white">Book</h1>
+              <h1 className="bg-[#FF9138] p-2 font-bold rounded text-white">Sách</h1>
               <div className="my-2 grid grid-cols-5 gap-4">
                 {book?.slice(0, 10).map((book: any, index: any) => (
                   <BookTicket key={index} book={book} />
@@ -159,7 +160,7 @@ const Home = () => {
                     <img className="w-full" src={blog.image} alt="" />
                     <div>
                       <p className="font-bold text-xl text-center">
-                        {blog.tenMonHoc.length > 30 ? `${blog?.tenMonHoc?.slice(0, 30)} ...` : blog.tenMonHoc}
+                        {blog.tenMonHoc.length > 30 ? `${blog?.tenMonHoc?.slice(0, 20)} ...` : blog.tenMonHoc}
                       </p>
                       <div
                         className="w-full"

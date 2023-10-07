@@ -4,6 +4,7 @@ import { DispatchType, RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../componentClient/header/Header';
 import { useParams } from 'react-router-dom';
+import Footer from '../../componentClient/footer/Footer';
 
 const BlogDetail = () => {
     const dispatch: DispatchType = useDispatch()
@@ -18,7 +19,8 @@ const BlogDetail = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="w-[1200px] mx-auto">
+    <div>
+      <div className="w-[1200px] mx-auto">
      <div>
       <Header/>
      </div>
@@ -27,6 +29,10 @@ const BlogDetail = () => {
       <h1 className='font-bold text-4xl my-10'>{blogDetail?.title}</h1>
       <div dangerouslySetInnerHTML={{__html: blogDetail?.content}} />
      </div>
+
+     
+    </div>
+    <Footer/>
     </div>
   )
 }

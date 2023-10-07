@@ -43,4 +43,5 @@ export interface UserType {
   address: string
   borrowedBook?: string[]
   role: string
+  studentCode: string
 }

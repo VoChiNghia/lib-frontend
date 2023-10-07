@@ -41,17 +41,23 @@ const ListBookBorrow = () => {
   const representativeBodyTemplate = (item: any) => {
     return (
       <div>
-        {item?.status === "due" ? (
+       {item?.status === "due" 
+        ? (
           <p className="bg-red-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        ) : item?.status === "approved" ? (
+        ) 
+        : item?.status === "approve" 
+        ? (
           <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        ) : item?.status === "return" ? (
-          <p className="bg-green-700 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        ) : item?.status === "borrowed" ? (
-          <p className="bg-blue-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        ) : (
+        )
+        :  item?.status === "return" ?  <p className="bg-sky-500 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        :  item?.status === "borrowed" ?  <p className="bg-blue-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
+        :
+        (
           <p className="bg-yellow-600 w-20 text-white text-center rounded-xl mx-auto cursor-pointer">{item?.status}</p>
-        )}
+        )
+       
+        
+        }
       </div>
     )
   }
@@ -67,9 +73,9 @@ const ListBookBorrow = () => {
             text
             severity="danger"
             aria-label="Cancel"
-            onClick={() => {
-              dispatch(deleteBookBorrow(item._id))
-              dispatch(getAllBorrowBook())
+            onClick={async () => {
+            await dispatch(deleteBookBorrow(item._id))
+            await dispatch(getAllBorrowBook())
             }}
           />
         ) : null}

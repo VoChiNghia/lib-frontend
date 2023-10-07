@@ -1,17 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './headerAdmin.scss'
 import {BsBell} from 'react-icons/bs'
 import { CiLogout } from 'react-icons/ci'
 import { TOKEN, USER } from '../../config/axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/reducer/auth'
 import { history } from '../Layout'
+import io from 'socket.io-client';
+import { DispatchType, RootState } from '../../redux/store'
+import { getBookById } from '../../redux/reducer/book'
+
 const Header = () => {
+    const [data, setData] = useState<any>([]);
+
     const handleSubmit = () => {
         localStorage.removeItem(TOKEN);
         localStorage.removeItem(USER);
         history.push("/login");
       };
+      useEffect(() => {
+       const socket = io('server.donganlibrary.online');
+       socket.on('connect', () => {
+        console.log('Connected to server');
+      });
+      socket.on('data-change', (change) => {
+        setData((prev: any) => [...prev,change.fullDocument])
+        console.log('Data change:', change);
+      });
+
+        socket.on('disconnect', () => {
+          console.log('Disconnected from server');
+        });
+    
+        return () => {
+          socket.disconnect();
+        };
+      }, []);
   return (
     <div className="header">
         <div className="header__breadcrumb flex font-bold">
@@ -21,7 +45,14 @@ const Header = () => {
             <div className="header__profile-bell">
                 <span><BsBell/></span>
                 <div className="header__profile-bell__content">
-                    <p>chưa có thông báo mới</p>
+                    {
+                      data.map((data: any) => (
+                        <div className="text-black border-[1px] border-[#ccc] border-solid p-2">
+                          <p className="text-black">Sách đăng ký mượn: {data?._id}</p>
+                          <p className='text-black'>{data?.status}</p>
+                        </div>
+                      ))
+                    }
                 </div>    
             </div>
             <h1 className="header__profile-name">Võ Chí nghĩa</h1>

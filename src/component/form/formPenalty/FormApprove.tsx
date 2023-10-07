@@ -3,7 +3,7 @@ import { Dropdown } from "primereact/dropdown"
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import { DispatchType } from "../../../redux/store"
-import { createPenalty, getAllBorrowBook, updateStatusBorrowBook } from "../../../redux/reducer/book"
+import { createPenalty, getAllBorrowBook, getAllPenalty, updateStatusBorrowBook } from "../../../redux/reducer/book"
 import { InputTextarea } from "primereact/inputtextarea";
 
 const FormPenalty= ({item}: any) => {
@@ -20,6 +20,7 @@ const FormPenalty= ({item}: any) => {
       requireRecover: value2
     }
    await dispatch(createPenalty(action))
+   await dispatch(getAllPenalty())
   }
   return (
     <div className="col-12 md:col-4 flex flex-col">

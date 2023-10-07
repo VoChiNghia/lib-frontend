@@ -35,6 +35,7 @@ const UpdateUser = (props: AddBookProps) => {
         email: props.value.email,
         phoneNumber: props.value.phoneNumber,
         address: props.value.address,
+        studentCode: props?.value?.studentCode,
         role: props.value.role,
       }
   return (
@@ -111,6 +112,20 @@ const UpdateUser = (props: AddBookProps) => {
                         </Field>
                         <ErrorMessage
                           name="role"
+                          component="p"
+                          className="error"
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <p>Mã số sinh viên</p>
+                        <Field
+                          className="form-control"
+                          name="studentCode"
+                          placeholder="Mã số sinh viên ..."
+                        />
+                        <ErrorMessage
+                          name="studentCode"
                           component="p"
                           className="error"
                         />
