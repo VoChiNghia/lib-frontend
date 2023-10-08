@@ -21,6 +21,7 @@ import BookBorrow from "../../component/addminTabs/bookBorrow/BookBorrow";
 import { changeComponent } from "../../redux/reducer/compoentGlobal";
 import BlogManage from "../../component/addminTabs/blogManage/BlogManage";
 import ThongKe from "../../component/addminTabs/thongke/ThongKe";
+import { ProgressBar } from 'primereact/progressbar';
 const logo1 = require("../../assets/images/icon-3.webp");
 
 interface StrategyType {
@@ -44,6 +45,7 @@ const HomeAdmin = () => {
   const login = localStorage.getItem(USER)
   const [isPending, startTransition] = useTransition();
   const { component } = useSelector((state: RootState) => state.compoentGlobal)
+  const { loading } = useSelector((state: RootState) => state.book)
 
   
   // const [component, setcomponent] = useState<JSX.Element>(strategy.dashboard)
@@ -63,6 +65,9 @@ const HomeAdmin = () => {
 
   return (
     <div className="home bg-[#ccc]">
+      {
+       loading && <ProgressBar mode="indeterminate" style={{ height: '4px' }}></ProgressBar>
+      }
       <div className="home-container container">
         <div className="home-container__left-side">
           <div className="home-container__left-side__logo">

@@ -55,7 +55,7 @@ const BookManage = () => {
   ]
   const totalPage = Math.floor(totalBooks / LIMIT)
   const dispatch: DispatchType = useDispatch()
-
+  const [progress, setProgress] = useState()
   const getAllBookApi = () => {
     dispatch(getAllBook(""))
     dispatch(getAllCategory())

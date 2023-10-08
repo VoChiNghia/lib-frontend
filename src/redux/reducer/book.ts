@@ -439,7 +439,11 @@ export const updateFile = (fromdata: any, query: any) => {
       const respone: AxiosResponse = await http.put(
         `/api/file/file-pdf`,
         fromdata,{
-          params: query
+          params: query,
+          onUploadProgress: data => {
+            console.log(data.loaded)
+            console.log(data.total)
+          },
         }
       );
       toast.success(respone.data.message);
