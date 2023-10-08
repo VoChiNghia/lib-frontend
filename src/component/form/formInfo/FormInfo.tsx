@@ -9,9 +9,9 @@ const FormInfo = ({ jsx }: any) => {
     toast.current.show({ severity: "warn", summary: "Thông báo", detail: "Không Tìm thấy file pdf", life: 3000 })
   }
   return (
-    <div className="flex">
+    <div className="flex ">
       <Toast ref={toast} />
-      <img src={jsx.image} alt="" />
+      <img className="w-32 mx-4" src={jsx.image} alt="" />
       <div className="">
         <h1 className="text-xl">
           <span className="font-bold">Tên môn học:</span> {jsx.tenMonHoc}
