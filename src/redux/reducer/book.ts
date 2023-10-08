@@ -440,10 +440,6 @@ export const updateFile = (fromdata: any, query: any) => {
         `/api/file/file-pdf`,
         fromdata,{
           params: query,
-          onUploadProgress: data => {
-            console.log(data.loaded)
-            console.log(data.total)
-          },
         }
       );
       toast.success(respone.data.message);
